@@ -1,0 +1,20 @@
+[
+    {"id": 1, "name": "Botellas eco", "company": "ecoBotellas", "cantidad":"5" , "precio": 12500, "description": "Esta es la mejor botella ecológica"},
+    {"id": 2, "name": "Shampoo", "company": "EcoPantene", "cantidad":"2" , "precio": 4500, "description": "Esto es un shampoo a base de eucalipto"},
+    {"id": 3, "name": "planta x", "company": "vivero cr", "cantidad":"15" , "precio": 850, "description": "Estas plantas necesitan mucha agua pero crecen un monton"},
+    {"id": 4, "name": "Jabón", "company": "jaboneco", "cantidad":"5" , "precio": 5500, "description": "Jabón completamente natural"},
+    {"id": 5, "name": "Cactus", "company": "VerdeSiempreGreen", "cantidad":"2" , "precio": 3000, "description": "Estas plantas necesitan poca agua"},
+    {"id": 6, "name": "Cartón", "company": "Reciclon", "cantidad":"15" , "precio": 300, "description": "Esto es un cartón"},
+    {"id": 7, "name": "EcoAmbientador", "company": "ecoeco", "cantidad":"4" , "precio": 12500, "description": "Este es un ambientador natural"},
+    {"id": 8, "name": "Pajillas de metal", "company": "PajiRes", "cantidad":"20" , "precio": 4500, "description": "Pajillas reutilizables de metal"},
+    {"id": 9, "name": "Rosas", "company": "vivero cr", "cantidad":"28" , "precio": 560, "description": "Estas plantas aromatizan el ambiente"},
+    {"id": 10, "name": "Botella talme 600ml", "company": "ecoBotellas", "cantidad":"3" , "precio": 15500, "description": "Esta es una botella de 600ml"},
+    {"id": 11, "name": "Shampoo savi", "company": "peloplanta", "cantidad":"2" , "precio": 4500, "description": "Esto es un shampoo a base de savila"},
+    {"id": 12, "name": "Savila", "company": "verde vivero", "cantidad":"25" , "precio": 850, "description": "Savila para tu casa"},
+    {"id": 13, "name": "Jabón de coco", "company": "jabonaco", "cantidad":"5" , "precio": 5500, "description": "Jabón completamente natural a base de coco"},
+    {"id": 14, "name": "Flores amarillas", "company": "GreenPlace", "cantidad":"1" , "precio": 3000, "description": "Flores amarilla para regalar"},
+    {"id": 16, "name": "Papeleco", "company": "paperRERE", "cantidad":"7" , "precio": 300, "description": "Papel muy bonito para la escuela de sus hijos"},
+    {"id": 17, "name": "jaboneco para suelos", "company": "ecoeco", "cantidad":"4" , "precio": 12500, "description": "limpia tus suelos rapido y dejalos brillantes"},
+    {"id": 18, "name": "platos verdes", "company": "PajiRes", "cantidad":"20" , "precio": 4500, "description": "platos reutilizables de metal"}
+]
+
