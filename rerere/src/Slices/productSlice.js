@@ -88,14 +88,14 @@ const productSlice = createSlice({
 export const {cleanState} = productSlice.actions;
 
 export const createProduct = createAsyncThunk('products/createProduct', async ({ product, productPicture }) => {
-    // const formData = new FormData();
-    // formData.append('file', productPicture);
-    // const uploadFileFetch = await fetch('http://localhost:7500/upload', {
-    //     method: 'POST',
-    //     body: formData,
-    // });
-    // const uploadFileData = await uploadFileFetch.json();
-    // product.picture = uploadFileData.url;
+    const formData = new FormData();
+    formData.append('file', productPicture);
+    const uploadFileFetch = await fetch('http://localhost:7500/upload', {
+        method: 'POST',
+        body: formData,
+    });
+    const uploadFileData = await uploadFileFetch.json();
+    product.picture = uploadFileData.url; 
     const createProductFetch = await fetch('http://localhost:7500/products', {
         method: 'POST',
         headers: {

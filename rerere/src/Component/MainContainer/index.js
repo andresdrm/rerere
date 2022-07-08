@@ -4,12 +4,9 @@ function MainContainer({
   children
 }) {
   
-  const theme = useSelector(
-    (state) => state.app.theme
-  );
 
   return (
-    <div className={`${theme.text} ${theme.background}`}>
+    <div className={`text-black bg-white`}>
       {children}
     </div>
   );

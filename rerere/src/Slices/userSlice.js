@@ -43,7 +43,7 @@ const userSlice = createSlice({
 export const { logout } = userSlice.actions;
 
 export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentials) => {
-    console.log("Credentials ", credentials);
+
     const loginFetch = await fetch('http://localhost:7500/users/login', {
         method: 'POST',
         headers: {
@@ -55,8 +55,10 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
         }),
     });
     const userData = await loginFetch.json();
-    console.log(userData);
     if (loginFetch.status === 200) {
+        localStorage.setItem('user', userData);
+        console.log('user data es: ',userData.email)
+        console.log(localStorage.getItem('user'));
         return userData;
     } else {
         return {
@@ -64,6 +66,7 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
             message: userData.error.message,
         }
     }
+
 });
 
 export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async (credentials) => {

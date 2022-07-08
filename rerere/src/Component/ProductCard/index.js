@@ -41,9 +41,7 @@ function saveCategory(a){
 
 function ProductCard(props){
    
-    const stars = [1,2,3,4,5];
     
-    let key = 0;
     const [showModal, setShowModal] = React.useState(false);
 
 
@@ -68,7 +66,7 @@ function ProductCard(props){
         <a href="/">
           <img
             className="max-h-[350px] min-h-[350px] max-w-[320px] min-w-[320px]  rounded-t-sm"
-            src={Logo}
+            src={props.info.url}
             alt="Producto"
           />
         </a>

@@ -10,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const theme = useSelector((state) => state.app.theme);
+
   const userIsLoggedIn = useSelector((state) => state.user.userIsLoggedIn);
 
   //const errorMessage = useSelector((state) => state.user.errorMessage);
