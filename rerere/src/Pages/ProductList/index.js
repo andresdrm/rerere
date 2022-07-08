@@ -1,56 +1,63 @@
-import React, {useState} from "react";
+import {React, useState, useEffect} from "react";
 // import ProductListComponent from "../../Component/ProductListComponent";
 import Header from "../../Component/Header";
-import SearchBar from "../../Component/SearchBar";
+import { getProducts, getProductsFiltered, getProductsCategory } from "../../Slices/productSlice";
 import ProductCard from "../../Component/ProductCard";
 import { FaSprayCan, FaBath, FaLeaf, FaCoffee } from "react-icons/fa";
-import ProductsData from "../productData.json"
 import { FaSearch } from "react-icons/fa";
+import {useDispatch, useSelector } from "react-redux";
 
-let length = ProductsData.length;
-let products = ProductsData;
+let length = 0;
 const dataTemp = [];
-let total = Math.ceil(length / 6);
+let total = 0;
 
 function fillDataTemp(index, array)
 {
   length = array.length;
+
   total = Math.ceil(length / 6);
-  console.log("variables", length, total);
-  dataTemp.splice(0,length);
-  for(let x = index-6; x < index && x !== length; x++){
+  dataTemp.splice(0,dataTemp.length);
+  for(let x = index-6; x < index && x < array.length; x++){
       dataTemp.push(array[x]);
   }
-  console.log("Arreglo".dataTemp);
 }
 
 
 
 function ProductList(){
-  const [page, setPage] = React.useState(1);
-  const [query, setQuery] = useState("");
-  // console.log(ProductsData.filter(user=> user.name.includes("Botella")));
-
-
-  function update(event)
-  {
-    setQuery(event);
-    console.log("que",query);
-    console.log("Filtro",products.filter(user => user.name.toLowerCase().includes(query)));
-    fillDataTemp(page*6, products.filter(user=> user.name.toLowerCase().includes(query)))
+  const [page, setPage] = useState(1);
+  const[query, setQuery] = useState("");
+  const[category, setCategory] = useState("");
+  
+  let key = 0;
+  
+  const productData = useSelector((state) => state.product.product);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if(query === "")
+    {
+      if(category === ""){
+        const array = dispatch(getProducts());
+      }else{
+        const array = dispatch(getProductsCategory(category));
+      }
+      
+    }
+    else
+    {
+      const array = dispatch(getProductsFiltered(query));
+    }
+  }, [dispatch, query, category]);
+  
+  if(productData !== null && productData.length > 0){
+    length = productData.length;
+    total =  Math.ceil(productData.length / 6);
+    fillDataTemp(page*6, productData);
   }
 
-  if(query === "")
-  {
-    fillDataTemp(page*6, ProductsData);
-  }
-
-  
-  
-    let key = 0;
-
-    return (
-        <>
+  return (
+    <>
         <div>
           <div className="max-w-12 w-full py-12 -my-10 ">
             <Header />
@@ -62,10 +69,13 @@ function ProductList(){
             <div className="relative min-w-[100%] ">
             <div className="relative max-w-[90%]">
                 <div  className="relative flex flex-wrap">
-                    <input className="bg-transparent min-w-full  font-[Poppins] focus:outline-none" onChange={(e) => update(e.target.value)} type="text" placeholder={"Products"} truncate></input>
+                    <input className="bg-transparent min-w-full  font-[Poppins] focus:outline-none" 
+                    value={query} onChange={(evt) => {
+                    setQuery(evt.target.value);
+            }}  type="text" placeholder={"Busar un producto"} truncate></input>
                 </div>
             </div>
-                <button className="absolute inset-y-0 right-0 flex items-center pr-0 ml-5"> <FaSearch /></button>
+               
             </div>
         </form>
           </div>
@@ -74,15 +84,15 @@ function ProductList(){
               <div className="...">
                 <button
                   type="button"
-                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white "
+                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white " onClick={() => setCategory("limpieza")}
                 >
-                  <FaSprayCan className="cursor-pointer text-2xl" />
+                  <FaSprayCan className="cursor-pointer text-2xl"  />
                 </button>
               </div>
               <div className="...">
                 <button
                   type="button"
-                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white"
+                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white" onClick={() => setCategory("bano")}
                 >
                   <FaBath className="cursor-pointer text-2xl" />
                 </button>
@@ -90,7 +100,7 @@ function ProductList(){
               <div className="...">
                 <button
                   type="button"
-                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white"
+                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white" onClick={() => setCategory("vivero")}
                 >
                   <FaLeaf className="cursor-pointer text-2xl" />
                 </button>
@@ -98,7 +108,7 @@ function ProductList(){
               <div className="...">
                 <button
                   type="button"
-                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white"
+                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white" onClick={() => setCategory("hogar")}
                 >
                   <FaCoffee className="cursor-pointer text-2xl" />
                 </button>
@@ -109,7 +119,7 @@ function ProductList(){
 
           <div className="flex justify-center items-center flex-col ">
             <div className="grid grid-cols-3 grid-flow-row gap-28">
-              {dataTemp.map((info) => {
+              {dataTemp?.map((info) => {
                 key++;
                 return <ProductCard key={key} info={info} />;
               })}
@@ -142,3 +152,5 @@ function ProductList(){
       );
 }
 export default ProductList;
+
+// onClick={() => {dispatch(getProductsFiltered({query})); }}

@@ -1,5 +1,8 @@
 [
-    {"id": 1, "name": "Pedro Perez", "usuario": "pedrinho", "email":"pedrinho1234@gmail.com" , "contraseña": "asdf1234"},
-    {"id": 2, "name": "Maria Martinez", "usuario": "maria_m", "email":"maria.martinez1234@gmail.com" , "contraseña": "asdf1234"},
-    {"id": 3, "name": "Ángel Artavial A", "usuario":"angelartaa_m", "email":"angelnez1234@gmail.com" , "contraseña": "asdf1234"}
+    
+        {"id": 1, "name": "Pedro Perez", "usuario": "pedrinho", "email":"pedrinho1234@gmail.com" , "contraseña": "asdf1234"},
+        {"id": 2, "name": "Maria Martinez", "usuario": "maria_m", "email":"maria.martinez1234@gmail.com" , "contraseña": "asdf1234"},
+        {"id": 3, "name": "Ángel Artavial A", "usuario":"angelartaa_m", "email":"angelnez1234@gmail.com" , "contraseña": "asdf1234" }
+
+   
 ]

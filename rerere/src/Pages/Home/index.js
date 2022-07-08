@@ -1,6 +1,6 @@
 import Header from "../../Component/Header";
 import Hero from "../../Component/Hero";
-import {Cards} from "../../Component/Cards";
+import Cards from "../../Component/Cards";
 import { React, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 

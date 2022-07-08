@@ -1,18 +1,18 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Header from "../../Component/Header";
 import SearchBar from "../../Component/SearchBar";
 import ProductCard from "../../Component/ProductCard";
 import {useNavigate } from "react-router-dom";
-import ProductsData from "../productData.json"
-
-let length = ProductsData.length;
+import {useDispatch, useSelector } from "react-redux";
+import { getUserProducts } from "../../Slices/productSlice";
+let length = 0;
 const dataTemp = [];
-let total = Math.ceil(ProductsData.length / 6);
+let total = 0;
 
-function fillDataTemp(index){
+function fillDataTemp(index, productData){
   dataTemp.splice(0,dataTemp.length);
   for(let x = index-6; x < index && x !== length; x++){
-      dataTemp.push(ProductsData[x]);
+      dataTemp.push(productData[x][0]);
   }
 }
 
@@ -22,12 +22,26 @@ function UserProducts(){
     let key = 0;
     let icon = true;
     let i = 0;
-    const [value, setValue] = React.useState(length);
-    const [page, setPage] = React.useState(1);
-    fillDataTemp(page*6);
+    const [value, setValue] = useState(length);
+    const [page, setPage] = useState(1);
+    const user = useSelector((state) => state.user.user);
+    const productData = useSelector((state) => state.product.product);
+    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(getUserProducts(user.email));
+
+      
+    }, [dispatch]);
+    if(productData !== null && productData.length > 0){
+      length = productData.length;
+      total =  Math.ceil(productData.length / 6);
+      fillDataTemp(page*6, productData);
+    }
+
+    
     function handleChange(newValue) {
-      Promise.resolve(i =ProductsData.map(function(x) {return x.id; }).indexOf(newValue)).then(() => {
-        ProductsData.splice(i,1);
+      Promise.resolve(i =productData.map(function(x) {return x.id; }).indexOf(newValue)).then(() => {
+        productData.splice(i,1);
         length = length -1;
         total = Math.ceil(length / 6);
         return setValue(length);
@@ -38,7 +52,9 @@ function UserProducts(){
     const navigate = useNavigate();
     const navigateNewProduct = () => {
         navigate('/NewProduct');
-      };
+    };
+
+
 
     return (
         <>

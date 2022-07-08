@@ -7,7 +7,7 @@ import {useNavigate } from "react-router-dom";
 import { postLogin } from "../../Slices/userSlice";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const theme = useSelector((state) => state.app.theme);
@@ -27,7 +27,7 @@ export default function Login() {
   const dispatch = useDispatch();
 //flex items-center justify-center h-screen
   return userIsLoggedIn ? (
-    <Navigate to="/" />
+    <Navigate to="/home " />
   ) : (
     <div className="mt-12"> 
       <div className="flex justify-center p-2 items-center w-[50%] mx-auto ">
@@ -37,9 +37,9 @@ export default function Login() {
       <div className=" justify-center p-4 items-center w-[40%] mx-auto">
           <form>
               <div className="mb-6">
-                  <input type="text" id="nombre" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-black" placeholder="Correo electronico" required value={username}
+                  <input type="text" id="nombre" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-black" placeholder="Correo electronico" required value={email}
             onChange={(evt) => {
-              setUsername(evt.target.value);
+              setEmail(evt.target.value);
             }} >
                   </input>
               </div> 
@@ -53,7 +53,7 @@ export default function Login() {
               <div className="flex justify-center items-center flex-col mb-4">
                 <div className="mb-6">
                   <button type="button" className="w-48 px-6 py-2 border-2 border-lime-700 text-lime-700 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" 
-                  onClick={() => {dispatch(postLogin({username,password,})); }}>Iniciar Sesion</button>
+                  onClick={() => {dispatch(postLogin({email,password,})); }}>Iniciar Sesion</button>
                 </div>
                 <div className="mb-4 cursor-pointer">
                   <span  onClick={navigateForgotPassword} className="hover:text-amber-600"  > ¿Olvidaste tu Contraseña?</span>

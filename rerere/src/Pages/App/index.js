@@ -21,8 +21,10 @@ function App() {
   const loading = useSelector(
     (state) => state.app.loading
   );
-  
   const dispatch = useDispatch();
+
+
+  
 
   useEffect(() => {
     dispatch(fetchPromo());
@@ -34,8 +36,8 @@ function App() {
     <MainContainer>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Login />} />
           <Route path="productList" element={<ProductList />} />
           <Route path="userProducts" element={<UserProducts />} />
           <Route path="NewProduct" element={<NewProduct />} />

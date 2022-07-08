@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import Logo from "../../Assets/jabones.jpg"
+import Logo from "../../Assets/box.jpg"
 import { FaStar, FaPen, FaTrashAlt, FaTimes, FaPlus, FaCheck, FaInfoCircle } from "react-icons/fa";
 
 const categories = ["Limpieza", "Baño"];
@@ -40,7 +40,7 @@ function saveCategory(a){
 
 
 function ProductCard(props){
-
+   
     const stars = [1,2,3,4,5];
     
     let key = 0;
@@ -78,7 +78,7 @@ function ProductCard(props){
           {props.info.name}
         </p>
         <p className="self-center mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Precio: ₡ {props.info.precio}
+          Precio: ₡ {props.info.price}
         </p>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <div className="flex ">
@@ -185,15 +185,16 @@ function ProductCard(props){
                           {props.icon ? (
                             <input
                             type="number"
-                            placeholder={props.info.precio}
+                            placeholder={props.info.price}
                             className="w-[15%] ml-2 hover:shadow"
                             />
                           ) : (
-                            <label>{props.info.precio}</label>
+                            <label>{props.info.price}</label>
                           )}
                           
                           <div className="flex flex-wrap text-center pt-4 mb-2">
                             {categories.map((category, index) => {
+                           
                               return (
                               <>   
                                 
@@ -274,11 +275,11 @@ function ProductCard(props){
                           </div>
                           {props.icon ? (
                             <div>
-                              <textarea className="form-control block w-full px-3 py-1.5 font-normal text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none max-h-[130px]" id="exampleFormControlTextarea1" rows="3" >{props.info.description}</textarea>
+                              <textarea className="form-control block w-full px-3 py-1.5 font-normal text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none max-h-[130px]" id="exampleFormControlTextarea1" rows="3" value={props.info.description} ></textarea>
                           </div>
                            ) : (
                             <div>
-                               <textarea disabled className="form-control block w-full px-3 py-1.5 font-normal text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none max-h-[130px]" id="exampleFormControlTextarea1" rows="3">{props.info.description}</textarea>
+                               <textarea disabled className="form-control block w-full px-3 py-1.5 font-normal text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none max-h-[130px]" id="exampleFormControlTextarea1" rows="3" value={props.info.description}></textarea>
                             </div>
                           )}
                           

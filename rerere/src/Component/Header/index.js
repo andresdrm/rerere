@@ -23,11 +23,11 @@ function Header(props) {
    <div className='flex w-full justify-between items-center h-20 px-4 absolute z-10 '>
       <div>
          <h1 >
-            <Link to="/" className="cursor-pointer">ReReRé</Link>
+            <Link to="/home" className="cursor-pointer">ReReRé</Link>
          </h1>
       </div>
       <ul className="hidden md:flex">
-         <li ><Link to="/">Inicio</Link></li>
+         <li ><Link to="/home">Inicio</Link></li>
          <li><Link to="/productList">Productos a la venta</Link> </li>
          <li><Link to="/userProducts"> Mis productos</Link></li>
          <li><Link to="/About">Información </Link></li>
