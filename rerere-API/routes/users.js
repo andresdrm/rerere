@@ -3,6 +3,7 @@ const {
   createUser,
   loginUser,
   recoverPassword,
+  editUser,
   // resetPassword,
   listUsers,
 } = require("../controllers/users");
@@ -23,6 +24,8 @@ router.route("/createUser").post(createUser);
 router.route("/login").post(loginUser);
 
 router.route("/recover-password").post(recoverPassword);
+
+router.route("/editUser/:id").post(editUser);
 
 // router.route("/reset-password").patch([validateSchema(resetPasswordSchema)], resetPassword);
 

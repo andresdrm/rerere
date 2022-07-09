@@ -4,13 +4,13 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         user: null,
-        isLoggedIn: false,
+        userIsLoggedIn: false,
         isCreated: false,
     },
     reducers: {
         logout: (state) => {
             state.user = null;
-            state.isLoggedIn = false;
+            state.userIsLoggedIn = false;
             state.isCreated = false;
         }
     },
@@ -37,10 +37,13 @@ const userSlice = createSlice({
                     state.isCreated = true;
                 }
             })
+            .addCase(logout.fulfilled, (state,action) => {
+                state.user = null;
+                state.userIsLoggedIn = false;
+            })
     }
 });
 
-export const { logout } = userSlice.actions;
 
 export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentials) => {
 
@@ -95,6 +98,38 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
             message: userData.error.message,
         }
     }
+});
+
+export const editUser = createAsyncThunk('users/editUser', async(data) =>{
+    const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
+     
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            name : data.name,
+            email: data.email,
+            contrasena: data.contrasena, 
+            nuevaContrasena: data.nuevaContrasena,
+            phone: data.phone,
+            picture: data.picture
+        })
+    });
+
+    const userData = await editUserFetch.json();
+    if (editUserFetch.status === 200) {
+        return userData;
+    } else {
+        return {
+            error: true,
+            message: userData.error.message,
+        }
+    }
+});
+
+export const logout = createAsyncThunk('users/logout', async () =>{
+    return;
 });
 
 export default userSlice.reducer;

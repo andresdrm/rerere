@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { sendRecoveryCodeEmail } = require("../services/mailService");
 const db = require("../models/index");
-const data = require("../Data/userData.json")
+const data = require("../Data/userData.json");
+const user = require("../models/user");
 
 const saltRounds = 10;
 
@@ -16,11 +17,42 @@ exports.createUser = async (req, res) => {
       email = userPayload.email,
       contrasena = await bcrypt.hash(userPayload.contrasena, saltRounds),
       phone = userPayload.phone,
+      picture = userPayload.picture
     ];
 
     //res.json(newUser);
    // res.status(200);
    res.status(200).send(newUser);
+  } catch (error) {
+    res.status(500).json({
+      message: "Ocurrió un error al insertar el usuario.",
+      error,
+    });
+    return;
+  }
+};
+
+exports.editUser = async (req, res) => {
+  try {
+    // console.log(req.body);
+    const userId = req.params.id;
+    console.log(userId);
+    const userPayload = req.body;
+    const editUser = [
+      name = userPayload.name,
+      email = userPayload.email,
+      contrasena = "",
+      phone = userPayload.phone,
+      picture = userPayload.picture
+    ];
+
+    if(userPayload.contrasena != "" && await bcrypt.hash(userPayload.contrasena, saltRounds) == user.contrasena){
+      editUser.contrasena = await bcrypt.hash(userPayload.contrasena, saltRounds);
+    }
+
+    //res.json(newUser);
+   // res.status(200);
+   res.status(200).send(editUser);
   } catch (error) {
     res.status(500).json({
       message: "Ocurrió un error al insertar el usuario.",
@@ -65,6 +97,7 @@ exports.loginUser = async (req, res) => {
       name: user[0].name,
       id: user[0].id,
       phone: user[0].phone,
+      picture: user[0].picture
     }
    // res.json(result);
    res.status(200).send(result);

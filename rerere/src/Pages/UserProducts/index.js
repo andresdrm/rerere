@@ -28,15 +28,17 @@ function UserProducts(){
     const productData = useSelector((state) => state.product.product);
     const dispatch = useDispatch();
     useEffect(() => {
-      dispatch(getUserProducts(user.email));
+     
+      dispatch(getUserProducts(user?.email));
+     
+  }, [dispatch, user]);
 
-      
-    }, [dispatch]);
-    if(productData !== null && productData.length > 0){
-      length = productData.length;
-      total =  Math.ceil(productData.length / 6);
-      fillDataTemp(page*6, productData);
-    }
+  if(productData !== null && productData.length > 0){
+    length = productData.length;
+    total =  Math.ceil(productData.length / 6);
+    fillDataTemp(page*6, productData);
+  }
+
 
     
     function handleChange(newValue) {
@@ -82,9 +84,11 @@ function UserProducts(){
 
             <div className="flex justify-center items-center flex-col ">
               <div className="grid grid-cols-3 grid-flow-row gap-28">
-                {dataTemp.map((info) => {
+                {dataTemp.length > 0 && dataTemp.map((info) => {
                   key = key + 1;
+                  if(info){
                   return (
+                    
                     <ProductCard
                       key={key}
                       id={key}
@@ -93,6 +97,9 @@ function UserProducts(){
                       info={info}
                     />
                   );
+                  }else{
+                    return null;
+                  }
                 })}
               </div>
             </div>

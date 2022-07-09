@@ -1,10 +1,15 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore,  getDefaultMiddleware } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
 import cartSlice from "./Slices/cartSlice";
 import userSlice from "./Slices/userSlice";
 import homeSlice from "./Slices/homeSlice";
 import productSlice from "./Slices/productSlice";
+import {
+  persistReducer,
+  REHYDRATE,
+  PERSIST,
+} from 'redux-persist';
+
 
 const reducers = combineReducers({
   user: userSlice,
@@ -21,6 +26,11 @@ const persistedReducer = persistReducer(rootPersistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [REHYDRATE, PERSIST],
+    },
+  })
 });
 
 export default store;

@@ -66,7 +66,7 @@ function ProductCard(props){
         <a href="/">
           <img
             className="max-h-[350px] min-h-[350px] max-w-[320px] min-w-[320px]  rounded-t-sm"
-            src={props.info.url}
+            src={Logo}
             alt="Producto"
           />
         </a>

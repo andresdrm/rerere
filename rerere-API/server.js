@@ -21,7 +21,7 @@ const upload = multer({
     acl: "public-read",
     bucket: "ci0137",
     key: function (req, file, cb) {
-      cb(null, `rerere/products/${file.originalname}`);
+      cb(null, `rerere/users/${file.originalname}`);
     },
   }),
 });

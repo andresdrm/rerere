@@ -1,10 +1,15 @@
 import React, {useState}from "react";
-import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import {useDispatch, useSelector} from "react-redux";
+import { FaShoppingCart, FaUser, FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../Slices/userSlice";
+import { Navigate } from "react-router-dom";
 // import 
 
 function Header(props) {
-   const [nav, setNav] = useState(false)
+   const [nav, setNav] = useState(false);
+   const userIsLoggedIn = useSelector((state) => state.user.userIsLoggedIn);
+   const dispatch = useDispatch();
    const handleNav = ()=>
    {
       setNav(!nav)
@@ -18,8 +23,15 @@ function Header(props) {
     const navigateEditUser = () => {
       navigate('/EditUser');
     };
+
+    const navigateLogout = () => {
+         dispatch(logout());
+        // navigate('/');          
+    };
     
-  return (
+return !userIsLoggedIn ? (
+      <Navigate to="/" />
+    ) : (
    <div className='flex w-full justify-between items-center h-20 px-4 absolute z-10 '>
       <div>
          <h1 >
@@ -39,6 +51,9 @@ function Header(props) {
          <button type="button" onClick={navigateEditUser} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
             <FaUser className="cursor-pointer text-2xl" />
          </button>
+         <button type="button" onClick={() => {navigateLogout()}} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
+            <FaSignOutAlt className="cursor-pointer text-2xl" />
+         </button>
       </div>
 
       <div onClick={handleNav} className="md:hidden">
@@ -55,6 +70,7 @@ function Header(props) {
             <div className="flex flex-col">
                <button>Carrito</button>
                <button>Mi perfil</button>
+               <button>Cerrar sesión</button>
             </div>
          </ul>
       </div>
