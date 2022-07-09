@@ -2,28 +2,21 @@ import React, {  useState } from "react";
 import Header from "../../Component/Header";
 import Product from "../../Component/CartProduct";
 import {useNavigate } from "react-router-dom";
-const data = 
-[
-    {id: 1, name: "Botellas eco", company: "ecoBotellas", cantidad:"5" , precio: 12500},
-    {id: 2, name: "Shampoo", company: "pantene", cantidad:"2" , precio: 4500},
-    {id: 3, name: "planta x", company: "vivero cr", cantidad:"15" , precio: 850},
-];
+import { useSelector } from "react-redux";
 
 export const Cart = () => 
 {  
     let amount = 0;
-
+    const data = useSelector((state) => state.cart.products);
     data.map((product) => {
 
         return(
-            amount = amount + product.precio
+            amount = amount + product.price
         );
      
     })
-   
     const [total, setTotal] = useState(amount);
     const handleChange = (newValue) => {
-        console.log("Recibe algo:",newValue);
         setTotal(total - newValue);
     }
     const navigate = useNavigate();
@@ -67,7 +60,6 @@ export const Cart = () =>
                                             
                                         </div>
                                         {data.map((product) => {
-                                                        console.log("Product",product)
                                                         amount += product.precio
                                                         
                                                         return(

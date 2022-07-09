@@ -3,7 +3,7 @@ import Header from "../../Component/Header";
 import Default from '../../Assets/default.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../Slices/userSlice';
-
+import { useNavigate } from "react-router-dom";
 
 export const EditUser = () => 
 {
@@ -11,6 +11,7 @@ export const EditUser = () =>
     
     const user = useSelector((state) => state.user.user);
     const [cambiarImg, setCambiarImg] = useState(null);
+
     
     const dispatch = useDispatch(); 
     const [datos, setDatos] = useState({
@@ -35,10 +36,10 @@ export const EditUser = () =>
     const cambiarContraseña = () =>{
         setCambiar(!cambiar);
     }
-   
+    const navigate = useNavigate();
     const setChanges = () =>{
         dispatch(editUser(datos));
-        console.log("Entro", datos);
+        navigate('/home');
     }
 
     return(

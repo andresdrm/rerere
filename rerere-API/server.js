@@ -21,6 +21,17 @@ const upload = multer({
     acl: "public-read",
     bucket: "ci0137",
     key: function (req, file, cb) {
+      cb(null, `rerere/products/${file.originalname}`);
+    },
+  }),
+});
+
+const uploadUser = multer({
+  storage: multerS3({
+    s3,
+    acl: "public-read",
+    bucket: "ci0137",
+    key: function (req, file, cb) {
       cb(null, `rerere/users/${file.originalname}`);
     },
   }),
@@ -45,6 +56,17 @@ server.use("/products", productsRoutes);
 // server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 server.post("/upload", upload.single("file"), function (req, res) {
+  const file = req.file;
+  res.send({
+    message: "Uploaded!",
+    url: file.location,
+    name: file.key,
+    type: file.mimetype,
+    size: file.size,
+  });
+});
+
+server.post("/uploadUsers", uploadUser.single("file"), function (req, res) {
   const file = req.file;
   res.send({
     message: "Uploaded!",

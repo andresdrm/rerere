@@ -3,13 +3,15 @@ import { useState } from "react";
 import product from '../../Assets/botellas.jpg';
 import shampoo from '../../Assets/shampoo.jpg';
 import { FaTrash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../../Slices/cartSlice";
 
 
 
 function CartProduct(props) {
 	
 
-
+	const dispatch = useDispatch();
 	const [hideProduct, setStatus] = useState(false);
 
 	const handleChange = (event) => {
@@ -18,12 +20,11 @@ function CartProduct(props) {
 
 	console.log("Datos:", props);
     return (
-        <>
-		{!hideProduct ? (
+     
 			<>
 				<div name="item" className="flex justify-between items-center pt-4 mt-4 border-t">
             				<div className="flex  items-center">
-                                <img src={product} alt="producto" className="rounded-full max-h-24 max-w-24 "></img>
+                                <img src={props.information.url} alt="producto" className="rounded-full max-h-24 max-w-24 "></img>
 
             					<div className="flex flex-col ml-3 ">
             						<span className="text-md font-medium w-auto">{props.information.name}</span>
@@ -35,21 +36,20 @@ function CartProduct(props) {
             				<div className="flex justify-center items-center">
             					
             					<div className="pr-8 flex">
-                                    <span className="text-md text-center font-medium w-auto">2</span>
+                                    <span className="text-md text-center font-medium w-auto">{props.information.amount}</span>
             					</div>
 
             					<div className="pr-8">
-                                    <span className="text-md font-medium w-auto"> ₡{props.information.precio}</span>
+                                    <span className="text-md font-medium w-auto"> ₡{props.information.price}</span>
             					</div>
                                 <div>
-                                    <FaTrash className="cursor-pointer "  onClick={() => {setStatus(true); handleChange(props.information.precio)}}/>
+                                    <FaTrash className="cursor-pointer "  onClick={() => {dispatch(removeItem(props.information)); handleChange(props.information.price)}}/>
             					</div>
             				</div>
             				
             			</div>	
 			</>
-      	) : null}      			
-         </>
+      
     )
     
 }

@@ -34,9 +34,7 @@ exports.createUser = async (req, res) => {
 
 exports.editUser = async (req, res) => {
   try {
-    // console.log(req.body);
     const userId = req.params.id;
-    console.log(userId);
     const userPayload = req.body;
     const editUser = [
       name = userPayload.name,
@@ -45,9 +43,10 @@ exports.editUser = async (req, res) => {
       phone = userPayload.phone,
       picture = userPayload.picture
     ];
-
+    let array = data;
+    const user = array.filter(e => e.id == userId);
     if(userPayload.contrasena != "" && await bcrypt.hash(userPayload.contrasena, saltRounds) == user.contrasena){
-      editUser.contrasena = await bcrypt.hash(userPayload.contrasena, saltRounds);
+      user.contrasena = await bcrypt.hash(userPayload.nuevaContrasena, saltRounds);
     }
 
     //res.json(newUser);
@@ -63,35 +62,16 @@ exports.editUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  // #swagger.tags = ['Users']
+ 
   try {
     const userPayload = req.body;
-  /*  const user = await db.User.findOne({
-      where: { email: userPayload.email },
-    });*/
     let array = data;
-    // console.log(array);
     const user = array.filter(e => e.email == userPayload.email);
-    // console.log(user[0]);
-    // array.find(user => user.email == email);
     if (!user[0] || !(await bcrypt.compare(userPayload.contrasena, user[0].contrasena))) {
       res.status(401).send("Invalid credentials");
       return;
     }
-   // const roles = await db.UserRole.findAll({ where: { userId: user.id } });
-    // const rolesIds = roles.map((r) => r.roleId);
-
-   /* const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_KEY,
-      {
-        expiresIn: "5m",
-      }
-    );*/
-    // const result = {
-    //   ...user.toJSON(),
-    //  // token,
-    // };
+ 
     const result = {
       email: user[0].email,
       name: user[0].name,
@@ -99,7 +79,7 @@ exports.loginUser = async (req, res) => {
       phone: user[0].phone,
       picture: user[0].picture
     }
-   // res.json(result);
+  
    res.status(200).send(result);
   } catch (error) {
     res.status(500).send("Server error: " + error);
@@ -143,10 +123,7 @@ exports.resetPassword = async (req, res) => {
   try {
     const userPayload = req.body;
 
-    // const user = await db.User.findOne({
-    //   where: { email: userPayload.email },
-    //   include: ["recoveryCode"],
-    // });
+  
     const user = array.filter(e => e.email == userPayload.email);
     if (!user || !user.recoveryCode || user.recoveryCode.code !== userPayload.code) 
     {

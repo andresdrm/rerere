@@ -1,12 +1,14 @@
 const nodemailer = require("nodemailer");
-
+const dotenv = require("dotenv");
+dotenv.config();
 const getTransporter = function () {
   let transport = nodemailer.createTransport({
-    host: "	smtp.ethereal.email", 
-    port: 587,
+    host: process.env.EMAIL_HOST, 
+    port: process.env.EMAIL_PORT,
+    secure: true,
     auth: {
-      user: "zakary.crona41@ethereal.email",
-      pass: "HhqU5U7DbZw4wHHhVS"
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
 
@@ -20,8 +22,8 @@ exports.sendRecoveryCodeEmail = async (userEmail, randomToken) => {
   console.log(userEmail);
 
   const options = {
-    from: "zakary.crona41@ethereal.email",
-    to: userEmail,
+    from: "ci0137@psgfanclubcr.com",
+    to: "ldiego.esquivel1001@gmail.com",
     subject: "Su código de recuperación",
     text: `Utilice este código para recuperar su contraseña: ${randomToken}`,
     html: `Utilice este código para recuperar su contraseña: <strong>${randomToken}</strong>`,

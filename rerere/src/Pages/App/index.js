@@ -13,6 +13,7 @@ import {Cart} from "../Cart"
 import {NewUser} from "../NewUser"
 import {ForgotPassword} from "../ForgotPassword"
 import {NewPassword} from "../NewPassword"
+import { init } from "../../Slices/cartSlice";
 
 
 function App() {

@@ -1,7 +1,8 @@
 import React, {  useState } from "react";
 import Logo from "../../Assets/box.jpg"
 import { FaStar, FaPen, FaTrashAlt, FaTimes, FaPlus, FaCheck, FaInfoCircle } from "react-icons/fa";
-
+import { useDispatch } from "react-redux";
+import { addItem } from "../../Slices/cartSlice";
 const categories = ["Limpieza", "Baño"];
 
 function deleteCategory(index, category){
@@ -43,7 +44,7 @@ function ProductCard(props){
    
     
     const [showModal, setShowModal] = React.useState(false);
-
+    const dispatch = useDispatch();    
 
     function twoCalls() {
       setShowModal(false);
@@ -66,7 +67,7 @@ function ProductCard(props){
         <a href="/">
           <img
             className="max-h-[350px] min-h-[350px] max-w-[320px] min-w-[320px]  rounded-t-sm"
-            src={Logo}
+            src={props.info.url}
             alt="Producto"
           />
         </a>
@@ -120,6 +121,7 @@ function ProductCard(props){
                 <button
                   className="self-center content-center items-center bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                   type="button"
+                  onClick={() => dispatch(addItem(props.info))}
                 >
                   Agregar
                 </button>
@@ -173,7 +175,7 @@ function ProductCard(props){
                          
                           <img
                             className="object-fill max-h-40 min-h-[10rem] max-w-[10rem] min-w-[10rem]  rounded-t-sm m-auto mb-[5%]"
-                            src={Logo}
+                            src={props.info.url}
                             alt="Producto"
                           />
 

@@ -128,6 +128,29 @@ export const editUser = createAsyncThunk('users/editUser', async(data) =>{
     }
 });
 
+export const recoverPassword = createAsyncThunk('users/recover-password', async(mail) =>{
+    const recoverFetch = await fetch('http://localhost:7500/users/recover-password/', {
+    method: 'POST',
+    headers: {
+        "Content-type": "application/json"
+    },
+    body: JSON.stringify({
+        email : mail,
+    })
+});
+    const recover = await recoverFetch.json();
+    if (recoverFetch.status === 200) {
+        return recover;
+    } else {
+        return {
+            error: true,
+            message: recover.error.message,
+        }
+    }
+
+
+})
+
 export const logout = createAsyncThunk('users/logout', async () =>{
     return;
 });
