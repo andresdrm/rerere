@@ -1,18 +1,25 @@
 import { React, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { recoverPassword } from '../../Slices/userSlice';
 
 export const ForgotPassword = () => 
 {
     const [mail, setMail] = useState(null);
-    
-    
+    const code = useSelector((state) => state.user.code);
+   
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const changePassword = () => {
-        dispatch(recoverPassword(mail)); 
-        navigate("/");
+         const res = dispatch(recoverPassword(mail));
+
+        if(code === 0){
+            navigate("/");
+        }else{
+            navigate("/NewPassword");
+        }
+        
         alert("El correo ha sido enviado exitosamente a " + mail);
     }
 

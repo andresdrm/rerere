@@ -169,17 +169,12 @@ function ProductCard(props){
                              </label>
              
                             ) : null}
-
-                            
-
-                         
+   
                           <img
                             className="object-fill max-h-40 min-h-[10rem] max-w-[10rem] min-w-[10rem]  rounded-t-sm m-auto mb-[5%]"
                             src={props.info.url}
                             alt="Producto"
                           />
-
-                          
 
                           Precio: ₡
                           {props.icon ? (

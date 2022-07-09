@@ -92,7 +92,7 @@ exports.recoverPassword = async (req, res) => {
     let array = data;
     const userPayload = req.body;
     const user = array.filter(e => e.email == userPayload.email);
-    if (!user) {
+    if (user.length === 0) {
       res.status(401).send("Datos no válidos");
       return;
     }

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
     name: 'user',
@@ -6,12 +6,16 @@ const userSlice = createSlice({
         user: null,
         userIsLoggedIn: false,
         isCreated: false,
+        code: 0,
+        date: "",
     },
     reducers: {
         logout: (state) => {
             state.user = null;
             state.userIsLoggedIn = false;
             state.isCreated = false;
+            state.code = 0;
+            state.date = "";
         }
     },
     extraReducers(builder) {
@@ -40,6 +44,25 @@ const userSlice = createSlice({
             .addCase(logout.fulfilled, (state,action) => {
                 state.user = null;
                 state.userIsLoggedIn = false;
+            })
+            .addCase(recoverPassword.fulfilled, (state,action) =>{
+                console.log("Action ", action.payload);
+                if(action.payload.error){
+                    state.code = 0;
+                    state.date = "";
+                    console.log("Entró al error");
+                }else{
+
+                    state.code = action.payload.code;
+                    state.date = action.payload.expirationDate;
+                }
+            })
+            .addCase(recoverPassword.rejected, (state, action) => {
+                
+                state.errorMessage = action.type;
+                console.log("State es: ", state.errorMessage);
+                state.code = 0;
+                state.date = "";
             })
     }
 });
@@ -139,10 +162,14 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
     })
 });
     const recover = await recoverFetch.json();
+    console.log("Recover esss: ", recoverFetch);
     if (recoverFetch.status === 200) {
+        console.log("Recover es: ", recover);
         return recover;
     } else {
+        console.log("Recover error es: ", recoverFetch.status);
         return {
+            
             error: true,
             message: recover.error.message,
         }
@@ -150,6 +177,34 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
 
 
 })
+
+export const newPassword = createAsyncThunk('users/editUser', async(data) =>{
+    const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
+     
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            code : data.code,
+            email: data.email,
+            contrasena: data.contrasena, 
+            nuevaContrasena: data.nuevaContrasena,
+            phone: data.phone,
+            picture: data.picture
+        })
+    });
+
+    const userData = await editUserFetch.json();
+    if (editUserFetch.status === 200) {
+        return userData;
+    } else {
+        return {
+            error: true,
+            message: userData.error.message,
+        }
+    }
+});
 
 export const logout = createAsyncThunk('users/logout', async () =>{
     return;

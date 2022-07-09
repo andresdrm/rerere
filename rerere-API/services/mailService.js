@@ -23,7 +23,7 @@ exports.sendRecoveryCodeEmail = async (userEmail, randomToken) => {
 
   const options = {
     from: "ci0137@psgfanclubcr.com",
-    to: "ldiego.esquivel1001@gmail.com",
+    to: userEmail,
     subject: "Su código de recuperación",
     text: `Utilice este código para recuperar su contraseña: ${randomToken}`,
     html: `Utilice este código para recuperar su contraseña: <strong>${randomToken}</strong>`,
