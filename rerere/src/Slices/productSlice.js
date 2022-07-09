@@ -72,7 +72,6 @@ const productSlice = createSlice({
                 state.success = false;
                 state.product = null;
             } else {
-                // console.log("payload",action.payload);
                 state.success = true;
                 state.product = action.payload;
             }
