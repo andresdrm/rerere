@@ -1,10 +1,8 @@
 import {React, useState, useEffect} from "react";
-// import ProductListComponent from "../../Component/ProductListComponent";
 import Header from "../../Component/Header";
 import { getProducts, getProductsFiltered, getProductsCategory } from "../../Slices/productSlice";
 import ProductCard from "../../Component/ProductCard";
 import { FaSprayCan, FaBath, FaLeaf, FaCoffee, FaTimes } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
 import {useDispatch, useSelector } from "react-redux";
 
 let length = 0;
@@ -33,7 +31,7 @@ function ProductList(){
   
   const productData = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
     if(query === "")
     {
@@ -48,7 +46,7 @@ function ProductList(){
     {
       dispatch(getProductsFiltered(query));
     }
-  }, [dispatch, query, category]);
+  }, [dispatch, query, category, productData]);
   
   if(productData !== null && productData.length > 0){
     length = productData.length;

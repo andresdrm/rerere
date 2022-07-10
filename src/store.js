@@ -6,8 +6,6 @@ import homeSlice from "./Slices/homeSlice";
 import productSlice from "./Slices/productSlice";
 import {
   persistReducer,
-  REHYDRATE,
-  PERSIST,
 } from 'redux-persist';
 
 
