@@ -148,7 +148,6 @@ export const getProducts = createAsyncThunk('/products/', async (credentials, {g
         }),
     });
     const userData = await filterProductsFetch.json();
-    console.log(userData);
     if (filterProductsFetch.status === 200) {
         return userData;
     } else {

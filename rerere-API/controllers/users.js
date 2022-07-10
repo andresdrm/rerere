@@ -9,7 +9,6 @@ const saltRounds = 10;
 
 exports.createUser = async (req, res) => {
   try {
-    // console.log(req.body);
     const userPayload = req.body;
 
     const token = jwt.sign(

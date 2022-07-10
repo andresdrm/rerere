@@ -44,7 +44,6 @@ const info =  [
   const dispatch = useDispatch();
   useEffect(() => {
     const array = dispatch(getCards());
-    // console.log(array);
   }, [dispatch]);
 
     return (

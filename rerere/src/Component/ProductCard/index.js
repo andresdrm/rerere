@@ -58,7 +58,6 @@ function ProductCard(props){
     function handleChange(event) {
       props.onChange(event);
     }
-    console.log("Props es: ", props);
 
     
     return(

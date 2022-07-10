@@ -13,14 +13,12 @@ const cartSlice = createSlice({
         addItem: (state, action) => {
             state.countOfItems++;
            
-            console.log("State products antes", current(state.products));
             
             if(state.products.filter(e => e.id === action.payload.id).length === 0){
                 state.products.push(action.payload);
             }
                   
             
-            console.log("State products después",current(state.products));
         },
         removeItem: (state, action) => {
             state.countOfItems--;

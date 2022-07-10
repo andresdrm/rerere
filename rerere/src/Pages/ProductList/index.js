@@ -3,7 +3,7 @@ import {React, useState, useEffect} from "react";
 import Header from "../../Component/Header";
 import { getProducts, getProductsFiltered, getProductsCategory } from "../../Slices/productSlice";
 import ProductCard from "../../Component/ProductCard";
-import { FaSprayCan, FaBath, FaLeaf, FaCoffee } from "react-icons/fa";
+import { FaSprayCan, FaBath, FaLeaf, FaCoffee, FaTimes } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import {useDispatch, useSelector } from "react-redux";
 
@@ -80,7 +80,7 @@ function ProductList(){
         </form>
           </div>
           <div className="flex justify-center p-8 items-center w-[50%] mx-auto">
-            <div className=" grid grid-cols-4 gap-20 ">
+            <div className=" grid grid-cols-5 gap-20 ">
               <div className="...">
                 <button
                   type="button"
@@ -111,6 +111,14 @@ function ProductList(){
                   className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white" onClick={() => setCategory("hogar")}
                 >
                   <FaCoffee className="cursor-pointer text-2xl" />
+                </button>
+              </div>
+              <div className="...">
+                <button
+                  type="button"
+                  className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white" onClick={() => setCategory("")}
+                >
+                  <FaTimes className="cursor-pointer text-2xl" />
                 </button>
               </div>
 

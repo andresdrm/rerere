@@ -19,7 +19,6 @@ const getTransporter = function () {
 
 exports.sendRecoveryCodeEmail = async (userEmail, randomToken) => {
   let transporter = getTransporter();
-  console.log(userEmail);
 
   const options = {
     from: "ci0137@psgfanclubcr.com",
@@ -35,7 +34,6 @@ exports.sendRecoveryCodeEmail = async (userEmail, randomToken) => {
       console.log(err);
       return;
     }
-    console.log("Sent: " + info.response);
   });
 };
 

@@ -95,7 +95,7 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
     });
     const userData = await loginFetch.json();
     if (loginFetch.status === 200) {
-        Mixpanel.identify(userData.id);//Verificar el ID
+        Mixpanel.identify(userData.id);
         Mixpanel.people.set({
             $first_name: userData.name,
             $email: userData.email
@@ -112,7 +112,6 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
 });
 
 export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async (credentials) => {
-    console.log("Los credentials son: ", credentials)
     const createUserFetch = await fetch('http://localhost:7500/users/createUser', {
      
         method: 'POST',
@@ -128,7 +127,6 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
     });
 
     const userData = await createUserFetch.json();
-    console.log(userData);
     if (createUserFetch.status === 200) {
         return userData;
     } else {
@@ -180,14 +178,11 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
     })
 });
     const recover = await recoverFetch.json();
-    console.log("Recover esss: ", recoverFetch);
     if (recoverFetch.status === 200) {
-        console.log("Recover es: ", recover);
         
 
         return {...recover, success:true};
     } else {
-        console.log("Recover error es: ", recoverFetch.status);
         return {
             success: false,
             error: true,

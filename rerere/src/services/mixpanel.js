@@ -1,6 +1,5 @@
 import mixpanel from "mixpanel-browser";
 
-console.log("El mixpanel es: ","da7a516955a42122902ce32525adf66e")
 mixpanel.init("da7a516955a42122902ce32525adf66e", {
     persistence: "localStorage",
     secure_cookie: true,

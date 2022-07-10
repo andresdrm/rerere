@@ -93,7 +93,6 @@ exports.userProducts = async (req, res) => {
         for(let x=0; x < userP[0].products.length; x++){
            array.push(productData.filter(user => user.id == userP[0].products[x]));
         } 
-        console.log("El array es: ", array); 
         res.status(200).send(array);
     }catch(error){
         res.status(500).json({

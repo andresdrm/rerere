@@ -18,7 +18,6 @@ function CartProduct(props) {
 		props.onChange(event);
 	};
 
-	console.log("Datos:", props);
     return (
      
 			<>
