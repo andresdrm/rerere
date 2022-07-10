@@ -11,7 +11,9 @@ exports.createUser = async (req, res) => {
   try {
     const userPayload = req.body;
 
-    const token = jwt.sign(
+
+
+    let token = jwt.sign(
       { userEmail: userPayload.email },
       process.env.JWT_KEY,
       {
@@ -19,19 +21,19 @@ exports.createUser = async (req, res) => {
       }
     );
 
+
+
     let array = data;
-    const user = array.filter(e => e.email == userPayload.email);
+    const user = array.filter(e => e.email === userPayload.email);
     if(user.length === 0){
     const newUser = [
       id = new Date().getTime(),
-      name = userPayload.name,
       email = userPayload.email,
       contrasena = await bcrypt.hash(userPayload.contrasena, saltRounds),
       phone = userPayload.phone,
       picture = userPayload.picture,
       token = token
     ];
-
    res.status(200).send(newUser);
   }else{
     res.status(409).send("El usuario ya está registrado.");
@@ -167,7 +169,13 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.changePassword = async (req, res) => {
+  console.log("Req: ", req.body );
   try {
+    if (req.body === null) 
+    {
+      res.status(204).send("No content");
+      return;
+    }
     let array = data;
     const userPayload = req.body;
 
@@ -188,6 +196,8 @@ exports.changePassword = async (req, res) => {
         );
       return;
    }
+   console.log("LLego al 200");
+   res.status(200).send("Contraseña restaurada");
 
   } catch (error) {
     res.status(500).send("Server error: " + error);

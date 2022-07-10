@@ -3,7 +3,7 @@
   "info": {
     "title": "Rerere - API",
     "description": "Este es el API del laboratorio de backend para la aplicación Rerere",
-    "version": "1.0.0"
+    "version": "0.0.1"
   },
   "host": "localhost:7500",
   "basePath": "/",
@@ -26,15 +26,43 @@
         "tags": [
           "Upload Image"
         ],
-        "summary": "Sube una imagen",
+        "name": "file",
+        "summary": "Sube una imagen de producto",
         "description": "Upload para las imágenes de los productos",
+        "operationId": "uploadFile",
         "consumes": "multipart/form-data",
-        "produces": "application/json",
         "security":[
           {
             "Bearer": []
           }
         ],
+        "parameters": [
+          {
+            "name": "file",
+  "in": "formData",
+  "description": "The file of the user",
+  "required": true,
+  "type": "file"
+
+           }
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/uploadUser": {
+      "post": {
+        "tags": [
+          "Upload Image"
+        ],
+        "summary": "Sube una imagen a usuario",
+        "description": "Upload para las imágenes de los usuarios",
+        "consumes": "multipart/form-data",
+        "produces": "application/json",
         "parameters": [
           {
             "name": "picture",
@@ -54,6 +82,7 @@
         "tags": [
           "Users"
         ],
+        "summary": "Retorna la lista de usuarios",
         "description": "Devuelve una lista de los usuarios",
         "parameters": [
           {
@@ -80,6 +109,7 @@
         "tags": [
           "Users"
         ],
+        "summary": "Se utiliza para ingresar al sitio",
         "description": "Se utiliza para ingresar al sitio, devuelve la información del usuario con su respectivo token",
         "parameters": [
           {
@@ -116,7 +146,8 @@
         "tags": [
           "Users"
         ],
-        "description": "Envía un correo para cambiar la contraseña",
+        "summary": "Se utiliza para cambiar la contraseña.",
+        "description": "Envía un correo para cambiar la contraseña por medio de un código.",
         "parameters": [
           {
             "name": "body",
@@ -125,7 +156,7 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "ldiego.esquivel1001@gmail.com"
+                  "example": "lotazi@mailo.icu"
                 }
               }
             }
@@ -144,12 +175,59 @@
         }
       }
     },
-    "/users/reset-password": {
+    "/users/createUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Crea un usuario",
+        "description": "Se ingresan los datos para crear un usuario",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Andrés"
+                },
+                "email": {
+                  "example": "andres@gmail.com"
+                },
+                "contrasena": {
+                  "example": "asdf1234"
+                },
+                "phone": {
+                  "example": "99999999"
+                },
+                "picture": {
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "Conflict: User already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/changePassword": {
       "patch": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Se utiliza para cambiar la contraseña.",
+        "description": "Es utilizado para cambiar el password, es necesario utilizar el código y la fecha dada en recover-password",
         "parameters": [
           {
             "name": "body",
@@ -158,12 +236,18 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "example": "lotazi@mailo.icu"
+                },
+                "contrasena": {
+                  "example": "asdf4321"
+                },
+                "confirmarContrasena": {
+                  "example": "asdf4321"
                 },
                 "code": {
                   "example": "any"
                 },
-                "password": {
+                "codigoExpiracion": {
                   "example": "any"
                 }
               }
@@ -171,6 +255,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           },
@@ -186,19 +273,159 @@
         }
       }
     },
+    "/users/editUser/:id": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Se utiliza para editar un usuario.",
+        "description": "Se edita la información de un usuario, se debe ingresar un correo existente. Debe hacer login y agregar el Bearer",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Maria Martinez"
+                },
+                "email": {
+                  "example": "lotazi@mailo.icu"
+                },
+                "contrasena": {
+                  "example": "asdf1234"
+                },
+                "nuevaContrasena": {
+                  "example": "asdf4321"
+                },
+                "phone": {
+                  "example": 88888888
+                },
+                "picture": {
+                  "example": "https://ci0137.s3.amazonaws.com/rerere/users/senorasonriente.jpg"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "Conflict: User already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/products/": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Retorna los productos.",
+        "description": "Retorna una lista de todos los productos.",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/createProduct": {
       "post": {
         "tags": [
           "Product"
         ],
-        "description": "",
+        "summary": "Retorna los productos.",
+        "description": "Retorna una lista de todos los productos.",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters":[
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Botellas acua"
+                },
+                "company": {
+                  "example": "EcoBotellas"
+                },
+                "amount": {
+                  "example": "5"
+                },
+                "price": {
+                  "example": 500
+                },
+                "description": {
+                  "example": "Botellas de agua ecológicas."
+                },
+                "category": {
+                  "example": "https://ci0137.s3.amazonaws.com/rerere/users/senorasonriente.jpg"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/userProducts": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Retorna los productos del usuario.",
+        "description": "Ingresando el email del usuario y su token, le retorna sus productos.",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
-            "description": "Create a product",
             "schema": {
-              "$ref": "#/definitions/AddProduct"
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "lotazi@mailo.icu"
+                }
+              }
             }
           }
         ],
@@ -208,6 +435,84 @@
           },
           "422": {
             "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/productList": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Retorna los productos filtrados.",
+        "description": "Filtras los productos según las letras dadas y retorna la lista de productos.",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "b"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/productCategory": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Retorna los productos filtrados por category.",
+        "description": "Filtras los productos según la categoría dada y retorna la lista de productos.",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "example": "vivero"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Invalid: Category not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -232,17 +537,13 @@
           "type": "string",
           "example": "patito"
         },
-        "phoneCountryCode": {
-          "type": "number",
-          "example": 506
-        },
         "phone": {
           "type": "number",
           "example": 70155104
         },
-        "birthdate": {
+        "picture": {
           "type": "string",
-          "example": "1989-10-16"
+          "example": "https://ci0137.s3.amazonaws.com/rerere/users/senorasonriente.jpg"
         }
       }
     },
@@ -251,19 +552,27 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "Nombre del producto"
+          "example": "Ambientador"
+        },
+        "company": {
+          "type": "string",
+          "example": "Ambientador"
+        },
+        "amount": {
+          "type": "number",
+          "example": "2"
         },
         "price": {
           "type": "number",
-          "example": 9999
+          "example": 1000
         },
         "description": {
           "type": "string",
-          "example": "Lorem ipsum kljdsf adsf asf adsf"
+          "example": "Esto es un ambientador"
         },
         "picture": {
           "type": "string",
-          "example": "https://domain.com/picture.jpg"
+          "example": "https://ci0137.s3.amazonaws.com/rerere/products/Ambientador.jpg"
         }
       }
     }

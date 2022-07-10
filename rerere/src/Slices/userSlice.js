@@ -112,8 +112,18 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
 });
 
 export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async (credentials) => {
+    const formData = new FormData();
+    const uploadFileFetch = await fetch('http://localhost:7500/uploadUser', {
+        method: 'POST',
+        body: formData,
+    });
+
+    const uploadFileData = await uploadFileFetch.json();
+    credentials.picture = uploadFileData.url; 
+ 
+
     const createUserFetch = await fetch('http://localhost:7500/users/createUser', {
-     
+
         method: 'POST',
         headers: {
             "Content-type": "application/json"
@@ -123,6 +133,7 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
             email: credentials.email,
             contrasena: credentials.password, 
             phone: credentials.phone,
+            picture: credentials.picture
         })
     });
 
@@ -224,8 +235,9 @@ export const newPassword = createAsyncThunk('users/editUser', async(data, { getS
 });
 
 export const changePassword = createAsyncThunk('users/editUser', async(data) =>{
+    console.log("Data es: ", data)
     const editPasswordFetch = await fetch('http://localhost:7500/users/changePassword', {
-     
+        
         method: 'PATCH',
         headers: {
             "Content-type": "application/json"

@@ -57,11 +57,11 @@ const swaggerFile = require("./swagger.json");
 //Documentation setup
 server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 const llega = () => {
-  console.log("Llegaaaaaaaaaa ", upload);
   return;
 }
-server.post("/upload", userIsAuthenticated,llega, upload.single("file"),function (req, res) {
-  console.log(req.file);
+
+server.post("/upload", userIsAuthenticated, upload.single("file"),function (req, res) {
+  console.log("Req file es:", req.file);
   const file = req.file;
  
   res.send({
@@ -73,7 +73,7 @@ server.post("/upload", userIsAuthenticated,llega, upload.single("file"),function
   });
 });
 
-server.post("/uploadUsers", userIsAuthenticated,uploadUser.single("file"), function (req, res) {
+server.post("/uploadUser", uploadUser.single("file"),function (req, res) {
   const file = req.file;
   res.send({
     message: "Uploaded!",

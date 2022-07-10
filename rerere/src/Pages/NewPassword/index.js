@@ -6,17 +6,16 @@ import { changePassword } from '../../Slices/userSlice';
 export const NewPassword = () => 
 {
     const code = useSelector((state) => state.user.code);
-    const date = useSelector((state) => state.user.date);
+    const dateT = useSelector((state) => state.user.date);
     const [validate, setValidate] = useState(true);
     const navigate = useNavigate();
     if(code === -1){
         navigate("/");
     }
 
-  
 
     const validateCode = (e) => {
-      if(date > new Date().toISOString()){
+      if(dateT > new Date().toISOString()){
         if(Number(e) !== Number(code)){
             setValidate(true);
         }else{
@@ -33,7 +32,7 @@ export const NewPassword = () =>
         correo: "",
         contrasena: "",
         confirmarContrasena: "",
-        codigoExpiracion: date
+        codigoExpiracion: dateT
     });
 
     const handleChange = (field, value) => {

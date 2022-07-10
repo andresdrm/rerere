@@ -136,6 +136,7 @@ export const getProducts = createAsyncThunk('/products/', async (credentials, {g
 
  export const getProductsFiltered = createAsyncThunk('products/productList', async (credentials, { getState }) => {
     const state = getState();
+    console.log("Product list es: ", credentials);
     const filterProductsFetch = await fetch('http://localhost:7500/products/productList', {
         method: 'POST',
         headers: {

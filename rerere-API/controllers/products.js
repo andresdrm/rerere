@@ -43,19 +43,19 @@ exports.categoryProducts = async (req, res) =>
 
 exports.filterProducts = async (req, res) => 
 {
+console.log("Req es: ", req.body);
   try {
-    const userPayload = req.body;
+    const productPayload = req.body;
 
     let array = productData;
 
-    const user = array.filter(e => e.name.toLowerCase().includes( userPayload.name));
-
-    if (!user) {
+    const product = array.filter(e => e.name.toLowerCase().includes( productPayload.name));
+    if (product.length === 0) {
       res.status(401).send("Invalid credentials");
       return;
     }
-    
-   res.status(200).send(user);
+   
+   res.status(200).send(product);
   } catch (error) {
     res.status(500).send("Server error: " + error);
   }
@@ -68,7 +68,7 @@ exports.createProduct = async (req, res) => {
         const newProduct = [
                 id = new Date().getTime(),
                 name= productPayload.name,
-                company = productPayload.name,
+                company = productPayload.company,
                 amount = productPayload.amount,
                 price = productPayload.price,
                 description = productPayload.description,
