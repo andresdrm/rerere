@@ -1,8 +1,4 @@
 import React from "react";
-// import { BiSearch } from "react-icons/bi";
-import { BiPlus } from "react-icons/bi";
-import { BiLike } from "react-icons/bi";
-import { BiComment } from "react-icons/bi";
 
 export const Card = (props) => {
     return(

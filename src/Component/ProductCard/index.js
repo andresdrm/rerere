@@ -1,6 +1,5 @@
-import React, {  useState } from "react";
-import Logo from "../../Assets/box.jpg"
-import { FaStar, FaPen, FaTrashAlt, FaTimes, FaPlus, FaCheck, FaInfoCircle } from "react-icons/fa";
+import React from "react";
+import {  FaPen, FaTrashAlt, FaTimes, FaPlus, FaCheck, FaInfoCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../Slices/cartSlice";
 import Mixpanel from "../../services/mixpanel";

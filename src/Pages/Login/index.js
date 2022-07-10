@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { user } from "../../Slices/userSlice";
 import ReReRe2 from '../../Assets/ReReRe2.png'
 import {useNavigate } from "react-router-dom";
 import { postLogin } from "../../Slices/userSlice";

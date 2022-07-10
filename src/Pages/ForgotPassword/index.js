@@ -1,13 +1,12 @@
-import { React, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { React, useState } from 'react';
+import { useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { recoverPassword } from '../../Slices/userSlice';
-import { Navigate } from "react-router-dom";
+
 export const ForgotPassword = () => 
 {
     const [mail, setMail] = useState(null);
-    const code = useSelector((state) => state.user.code);
-   
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

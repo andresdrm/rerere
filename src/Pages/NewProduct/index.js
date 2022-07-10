@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Header from "../../Component/Header";
 import Default from '../../Assets/logo3.png'
 import { createProduct } from '../../Slices/productSlice';

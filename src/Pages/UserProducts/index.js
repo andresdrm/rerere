@@ -22,7 +22,6 @@ function UserProducts(){
     let key = 0;
     let icon = true;
     let i = 0;
-    const [value, setValue] = useState(length);
     const [page, setPage] = useState(1);
     const user = useSelector((state) => state.user.user);
     const productData = useSelector((state) => state.product.product);
@@ -46,7 +45,6 @@ function UserProducts(){
         productData.splice(i,1);
         length = length -1;
         total = Math.ceil(length / 6);
-        return setValue(length);
       });
 
     }

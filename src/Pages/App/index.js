@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import MainContainer from "../../Component/MainContainer";
 import {Home} from "../Home";
@@ -13,7 +11,6 @@ import {Cart} from "../Cart"
 import {NewUser} from "../NewUser"
 import {ForgotPassword} from "../ForgotPassword"
 import {NewPassword} from "../NewPassword"
-import { init } from "../../Slices/cartSlice";
 
 
 function App() {

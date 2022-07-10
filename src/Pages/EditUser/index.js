@@ -1,6 +1,5 @@
 import { React,  useState  } from 'react';
 import Header from "../../Component/Header";
-import Default from '../../Assets/default.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser } from '../../Slices/userSlice';
 import { useNavigate } from "react-router-dom";
