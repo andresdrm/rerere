@@ -5,7 +5,7 @@ import shampoo from '../../Assets/shampoo.jpg';
 import { FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../../Slices/cartSlice";
-
+import Mixpanel from "../../services/mixpanel";
 
 
 function CartProduct(props) {
@@ -43,7 +43,7 @@ function CartProduct(props) {
                                     <span className="text-md font-medium w-auto"> ₡{props.information.price}</span>
             					</div>
                                 <div>
-                                    <FaTrash className="cursor-pointer "  onClick={() => {dispatch(removeItem(props.information)); handleChange(props.information.price)}}/>
+                                    <FaTrash className="cursor-pointer "  onClick={() => {dispatch(removeItem(props.information)); handleChange(props.information.price);Mixpanel.track(Mixpanel.TYPES.REMOVE_PRODUCT_FROM_CART)}}/>
             					</div>
             				</div>
             				

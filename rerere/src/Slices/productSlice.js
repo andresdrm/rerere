@@ -49,7 +49,6 @@ const productSlice = createSlice({
                 state.success = false;
                 state.product = null;
             } else {
-                // console.log("payload",action.payload);
                 state.success = true;
                 state.product = action.payload;
             }
@@ -86,11 +85,13 @@ const productSlice = createSlice({
 
 export const {cleanState} = productSlice.actions;
 
-export const createProduct = createAsyncThunk('products/createProduct', async ({ product, productPicture }) => {
+export const createProduct = createAsyncThunk('products/createProduct', async ( product, { getState }) => {
+    const state = getState();
     const formData = new FormData();
-    formData.append('file', productPicture);
+    formData.append('file', product.img);
     const uploadFileFetch = await fetch('http://localhost:7500/upload', {
         method: 'POST',
+        headers: {Authorization: `Bearer ${state.user.user.token}`},
         body: formData,
     });
     const uploadFileData = await uploadFileFetch.json();
@@ -98,7 +99,8 @@ export const createProduct = createAsyncThunk('products/createProduct', async ({
     const createProductFetch = await fetch('http://localhost:7500/products', {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify(product),
     });
@@ -113,9 +115,13 @@ export const createProduct = createAsyncThunk('products/createProduct', async ({
     }
 });
 
-export const getProducts = createAsyncThunk('/products/', async () => {
-     const productsFetch = await fetch('http://localhost:7500/products/', {
+export const getProducts = createAsyncThunk('/products/', async (credentials, {getState}) => {
+    const state = getState();
+     const productsFetch = await fetch('http://localhost:7500/products', {
          method: 'GET',
+         headers: {
+            Authorization: `Bearer ${state.user.user.token}`
+        },
      });
      const products = await productsFetch.json();
      if (productsFetch.status === 200) {
@@ -128,11 +134,13 @@ export const getProducts = createAsyncThunk('/products/', async () => {
      }
  });
 
- export const getProductsFiltered = createAsyncThunk('products/productList', async (credentials) => {
+ export const getProductsFiltered = createAsyncThunk('products/productList', async (credentials, { getState }) => {
+    const state = getState();
     const filterProductsFetch = await fetch('http://localhost:7500/products/productList', {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify({
             name: credentials,
@@ -151,11 +159,13 @@ export const getProducts = createAsyncThunk('/products/', async () => {
     }
 });
 
-export const getProductsCategory = createAsyncThunk('products/productCategory', async (credentials) => {
+export const getProductsCategory = createAsyncThunk('products/productCategory', async (credentials, { getState }) => {
+    const state = getState();
     const filterProductsFetch = await fetch('http://localhost:7500/products/productCategory', {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify({
             category: credentials,
@@ -173,12 +183,13 @@ export const getProductsCategory = createAsyncThunk('products/productCategory', 
     }
 });
 
-export const getUserProducts = createAsyncThunk('/products/userProducts', async(email) => {
-    console.log("El email es: ", email);
+export const getUserProducts = createAsyncThunk('/products/userProducts', async(email, { getState }) => {
+    const state = getState();
     const productsFetch = await fetch('http://localhost:7500/products/userProducts', {
          method: 'POST',
          headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify({
             email: email,
@@ -186,8 +197,7 @@ export const getUserProducts = createAsyncThunk('/products/userProducts', async(
     });
    
     const products = await productsFetch.json();
-    let array = products;
-    console.log("Los products son: ", array);
+ 
     if (productsFetch.status === 200) {
         return products;
     } else {

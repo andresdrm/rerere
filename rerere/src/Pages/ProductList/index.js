@@ -33,20 +33,20 @@ function ProductList(){
   
   const productData = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
-  
+  const user = useSelector((state) => state.user.user);
   useEffect(() => {
     if(query === "")
     {
       if(category === ""){
-        const array = dispatch(getProducts());
+         dispatch(getProducts(productData));
       }else{
-        const array = dispatch(getProductsCategory(category));
+        dispatch(getProductsCategory(category));
       }
       
     }
     else
     {
-      const array = dispatch(getProductsFiltered(query));
+      dispatch(getProductsFiltered(query));
     }
   }, [dispatch, query, category]);
   

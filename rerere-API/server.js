@@ -40,6 +40,7 @@ const uploadUser = multer({
 const usersRoutes = require("./routes/users");
 const homeRoutes = require("./routes/home");
 const productsRoutes = require("./routes/products");
+const { userIsAuthenticated } = require("./middlewares/auth");
 // const swaggerFile = require("./swagger.json");
 
 const server = express();
@@ -55,7 +56,7 @@ server.use("/products", productsRoutes);
 //Documentation setup
 // server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
-server.post("/upload", upload.single("file"), function (req, res) {
+server.post("/upload", userIsAuthenticated,upload.single("file"), function (req, res) {
   const file = req.file;
   res.send({
     message: "Uploaded!",
@@ -66,7 +67,7 @@ server.post("/upload", upload.single("file"), function (req, res) {
   });
 });
 
-server.post("/uploadUsers", uploadUser.single("file"), function (req, res) {
+server.post("/uploadUsers", userIsAuthenticated,uploadUser.single("file"), function (req, res) {
   const file = req.file;
   res.send({
     message: "Uploaded!",

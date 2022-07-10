@@ -4,6 +4,7 @@ import { FaShoppingCart, FaUser, FaBars, FaTimes, FaSignOutAlt } from "react-ico
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../Slices/userSlice";
 import { Navigate } from "react-router-dom";
+import Mixpanel from "../../services/mixpanel";
 // import 
 
 function Header(props) {
@@ -39,19 +40,32 @@ return !userIsLoggedIn ? (
          </h1>
       </div>
       <ul className="hidden md:flex">
-         <li ><Link to="/home">Inicio</Link></li>
-         <li><Link to="/productList">Productos a la venta</Link> </li>
-         <li><Link to="/userProducts"> Mis productos</Link></li>
-         <li><Link to="/About">Información </Link></li>
+         <li ><Link onClick ={()=>
+              {
+               Mixpanel.track(Mixpanel.TYPES.GO_TO_HOME)
+            }} to="/home">Inicio</Link></li>
+      
+         <li><Link onClick ={()=>
+            {
+               Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST)
+            }} to="/productList">Productos a la venta</Link> </li>
+         <li><Link onClick ={()=>
+            {
+               Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST_USER)
+            }}to="/userProducts"> Mis productos</Link></li>
+         <li><Link onClick ={()=>
+            {
+               Mixpanel.track(Mixpanel.TYPES.GO_TO_ABOUT)
+            }} to="/About">Información </Link></li>
       </ul>
       <div className="hidden md:flex gap-3">
-         <button type="button" href="/Cart"  onClick={navigateCart} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
+         <button type="button"  onClick={()=> {navigateCart(); Mixpanel.track(Mixpanel.TYPES.GO_TO_CART); }} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
             <FaShoppingCart className="cursor-pointer text-2xl" />
          </button>
-         <button type="button" onClick={navigateEditUser} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
+         <button type="button" onClick={()=> { navigateEditUser(); Mixpanel.track(Mixpanel.TYPES.GO_TO_EDIT_USER);  }} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
             <FaUser className="cursor-pointer text-2xl" />
          </button>
-         <button type="button" onClick={() => {navigateLogout()}} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
+         <button type="button" onClick={() => { navigateLogout(); Mixpanel.track(Mixpanel.TYPES.USER_SIGN_OUT);}} className="bg-lime-700 p-2 rounded-full text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-300 focus:ring-white">
             <FaSignOutAlt className="cursor-pointer text-2xl" />
          </button>
       </div>
@@ -63,14 +77,14 @@ return !userIsLoggedIn ? (
       <div onClick={handleNav} className={nav ? 'absolute left-0 top-0 w-full bg-gray-100/90 px-4 py-7 flex flex-col' : 'absolute left-[-100%]'}>
          <ul>
             <h1>ReReRé</h1>
-            <li  className="border-b">Inicio</li>
-            <li  className="border-b">Productos a la venta </li>
-            <li  className="border-b">Mis productos</li>
-            <li  className="border-b">Información</li>
+            <li  onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_HOME)}} className="border-b">Inicio</li>
+            <li   onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST)}} className="border-b">Productos a la venta </li>
+            <li  onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST_USER)}} className="border-b">Mis productos</li>
+            <li   onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_ABOUT)}} className="border-b">Información</li>
             <div className="flex flex-col">
-               <button>Carrito</button>
-               <button>Mi perfil</button>
-               <button>Cerrar sesión</button>
+               <button onClick={()=> { Mixpanel.track(Mixpanel.TYPES.GO_TO_CART); navigateCart();}}> Carrito </button>
+               <button onClick={()=> {  Mixpanel.track(Mixpanel.TYPES.GO_TO_EDIT_USER); navigateEditUser(); }}>Mi perfil</button>
+               <button onClick={() => {Mixpanel.track(Mixpanel.TYPES.USER_SIGN_OUT); navigateLogout();}}  >Cerrar sesión</button>
             </div>
          </ul>
       </div>

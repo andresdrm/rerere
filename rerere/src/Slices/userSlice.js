@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import Mixpanel from "../services/mixpanel";
 
 const userSlice = createSlice({
     name: 'user',
@@ -7,7 +8,7 @@ const userSlice = createSlice({
         userIsLoggedIn: false,
         isCreated: false,
         code: 0,
-        date: "",
+        date: ""
     },
     reducers: {
         logout: (state) => {
@@ -46,23 +47,35 @@ const userSlice = createSlice({
                 state.userIsLoggedIn = false;
             })
             .addCase(recoverPassword.fulfilled, (state,action) =>{
-                console.log("Action ", action.payload);
                 if(action.payload.error){
-                    state.code = 0;
+                    state.code = -1;
                     state.date = "";
-                    console.log("Entró al error");
                 }else{
-
                     state.code = action.payload.code;
                     state.date = action.payload.expirationDate;
+                    
                 }
             })
             .addCase(recoverPassword.rejected, (state, action) => {
                 
                 state.errorMessage = action.type;
-                console.log("State es: ", state.errorMessage);
-                state.code = 0;
+                state.code = -1;
                 state.date = "";
+            })
+            .addCase(changePassword.fulfilled, (state,action) =>{
+                if(action.payload.error){
+                    state.code = -1;
+                    state.date = null;
+                }else{
+                    state.code = 0;
+                    state.date = null;
+                    
+                }
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+                state.errorMessage = action.type;
+                state.code = -1;
+                state.date = null;
             })
     }
 });
@@ -82,9 +95,12 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
     });
     const userData = await loginFetch.json();
     if (loginFetch.status === 200) {
-        localStorage.setItem('user', userData);
-        console.log('user data es: ',userData.email)
-        console.log(localStorage.getItem('user'));
+        Mixpanel.identify(userData.id);//Verificar el ID
+        Mixpanel.people.set({
+            $first_name: userData.name,
+            $email: userData.email
+        })
+
         return userData;
     } else {
         return {
@@ -123,12 +139,14 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
     }
 });
 
-export const editUser = createAsyncThunk('users/editUser', async(data) =>{
+export const editUser = createAsyncThunk('users/editUser', async(data, { getState }) =>{
+    const state = getState();
     const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
      
         method: 'POST',
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify({
             name : data.name,
@@ -165,11 +183,13 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
     console.log("Recover esss: ", recoverFetch);
     if (recoverFetch.status === 200) {
         console.log("Recover es: ", recover);
-        return recover;
+        
+
+        return {...recover, success:true};
     } else {
         console.log("Recover error es: ", recoverFetch.status);
         return {
-            
+            success: false,
             error: true,
             message: recover.error.message,
         }
@@ -178,12 +198,14 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
 
 })
 
-export const newPassword = createAsyncThunk('users/editUser', async(data) =>{
+export const newPassword = createAsyncThunk('users/editUser', async(data, { getState }) =>{
+    const state = getState();
     const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
      
         method: 'POST',
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            Authorization: `Bearer ${state.user.user.token}`
         },
         body: JSON.stringify({
             code : data.code,
@@ -202,6 +224,33 @@ export const newPassword = createAsyncThunk('users/editUser', async(data) =>{
         return {
             error: true,
             message: userData.error.message,
+        }
+    }
+});
+
+export const changePassword = createAsyncThunk('users/editUser', async(data) =>{
+    const editPasswordFetch = await fetch('http://localhost:7500/users/changePassword', {
+     
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            email: data.correo,
+            contrasena: data.contrasena,
+            confirmarContrasena: data.confirmarContrasena,
+            code: data.givenCode,
+            codigoExpiracion: data.codigoExpiracion
+        })
+    });
+
+    const passwordData = await editPasswordFetch.json();
+    if (editPasswordFetch.status === 200) {
+        return passwordData;
+    } else {
+        return {
+            error: true,
+            message: passwordData.error.message,
         }
     }
 });

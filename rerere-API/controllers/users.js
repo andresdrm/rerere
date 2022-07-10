@@ -11,18 +11,32 @@ exports.createUser = async (req, res) => {
   try {
     // console.log(req.body);
     const userPayload = req.body;
+
+    const token = jwt.sign(
+      { userEmail: userPayload.email },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    let array = data;
+    const user = array.filter(e => e.email == userPayload.email);
+    if(user.length === 0){
     const newUser = [
       id = new Date().getTime(),
       name = userPayload.name,
       email = userPayload.email,
       contrasena = await bcrypt.hash(userPayload.contrasena, saltRounds),
       phone = userPayload.phone,
-      picture = userPayload.picture
+      picture = userPayload.picture,
+      token = token
     ];
 
-    //res.json(newUser);
-   // res.status(200);
    res.status(200).send(newUser);
+  }else{
+    res.status(409).send("El usuario ya está registrado.");
+  }
   } catch (error) {
     res.status(500).json({
       message: "Ocurrió un error al insertar el usuario.",
@@ -49,8 +63,6 @@ exports.editUser = async (req, res) => {
       user.contrasena = await bcrypt.hash(userPayload.nuevaContrasena, saltRounds);
     }
 
-    //res.json(newUser);
-   // res.status(200);
    res.status(200).send(editUser);
   } catch (error) {
     res.status(500).json({
@@ -71,14 +83,24 @@ exports.loginUser = async (req, res) => {
       res.status(401).send("Invalid credentials");
       return;
     }
- 
+
+    const token = jwt.sign(
+      { userEmail: user[0].email },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "7d",
+      }
+    );
+
     const result = {
       email: user[0].email,
       name: user[0].name,
       id: user[0].id,
       phone: user[0].phone,
-      picture: user[0].picture
+      picture: user[0].picture,
+      token
     }
+ 
   
    res.status(200).send(result);
   } catch (error) {
@@ -141,26 +163,42 @@ exports.resetPassword = async (req, res) => {
       return;
    }
 
-   // user.password = await bcrypt.hash(userPayload.password, saltRounds);
-   // user.save();
-
-   /* await db.UserRecoveryCode.destroy({
-      where: {
-        userId: user.id,
-      },
-    });
-*/
-   // res.status(204).send();
   } catch (error) {
     res.status(500).send("Server error: " + error);
   }
 };
 
+exports.changePassword = async (req, res) => {
+  try {
+    let array = data;
+    const userPayload = req.body;
+
+  
+    const user = array.filter(e => e.email == userPayload.email);
+    if (user.length === 0) 
+    {
+      res.status(401).send("Datos no válidos");
+      return;
+    }
+    
+    if (userPayload.codigoExpiracion < new Date().toISOString()) 
+    {
+      res
+        .status(401)
+        .send(
+          "El código de recuperación brindado ya expiró. Solicite un nuevo código de recuperación."
+        );
+      return;
+   }
+
+  } catch (error) {
+    res.status(500).send("Server error: " + error);
+  }
+}
 
 exports.listUsers = async (req, res) => {
   // #swagger.tags = ['Users']
   try {
-   // const result = await db.User.findAll();
     res.json(result);
   } catch (error) {
     res.status(500).send("Server error: " + error);

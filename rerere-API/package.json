@@ -1,7 +1,7 @@
 {
-  "name": "lab-api-002",
+  "name": "api-rerere",
   "version": "1.0.0",
-  "description": "Api de prueba para el curso CI-0137",
+  "description": "Api ReReRe",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,9 +10,9 @@
   "keywords": [
     "backend",
     "test",
-    "ci0137"
+    "rerere"
   ],
-  "author": "Daniel Calvo",
+  "author": "Luis Diego Esquivel, Andrés David Ramírez",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1152.0",

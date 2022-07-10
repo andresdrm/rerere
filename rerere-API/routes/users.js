@@ -4,12 +4,9 @@ const {
   loginUser,
   recoverPassword,
   editUser,
-  // resetPassword,
-  listUsers,
+  changePassword,
 } = require("../controllers/users");
-const { userIsAuthenticated, userIsInRole } = require("../middlewares/auth");
-//const { ROLES } = require("../utils/constants");
-const { validateSchema } = require("../middlewares/validation");
+const { userIsAuthenticated } = require("../middlewares/auth");
 const {
   createUserSchema,
   resetPasswordSchema,
@@ -25,8 +22,10 @@ router.route("/login").post(loginUser);
 
 router.route("/recover-password").post(recoverPassword);
 
-router.route("/editUser/:id").post(editUser);
+router.route("/editUser/:id").post(userIsAuthenticated, editUser);
 
-// router.route("/reset-password").patch([validateSchema(resetPasswordSchema)], resetPassword);
+router.route("/changePassword").patch(changePassword);
+
+
 
 module.exports = router;

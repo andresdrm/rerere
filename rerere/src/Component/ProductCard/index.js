@@ -3,6 +3,8 @@ import Logo from "../../Assets/box.jpg"
 import { FaStar, FaPen, FaTrashAlt, FaTimes, FaPlus, FaCheck, FaInfoCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../Slices/cartSlice";
+import Mixpanel from "../../services/mixpanel";
+
 const categories = ["Limpieza", "Baño"];
 
 function deleteCategory(index, category){
@@ -56,7 +58,7 @@ function ProductCard(props){
     function handleChange(event) {
       props.onChange(event);
     }
-    
+    console.log("Props es: ", props);
 
     
     return(
@@ -121,7 +123,7 @@ function ProductCard(props){
                 <button
                   className="self-center content-center items-center bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => dispatch(addItem(props.info))}
+                  onClick={() => {Mixpanel.track(Mixpanel.TYPES.ADD_PRODUCT_TO_CART); dispatch(addItem(props.info)); alert(` Se ha agregado ${props.info.name} al carrito` );}}
                 >
                   Agregar
                 </button>

@@ -6,15 +6,15 @@ const {
     filterProducts,
     categoryProducts,
   } = require("../controllers/products");
-
+  const { userIsAuthenticated } = require("../middlewares/auth");
   
 const router = express.Router();
 
-router.route("/").get(product);
-router.route("/createProduct").post(createProduct);
-router.route("/userProducts").post(userProducts);
-router.route("/productList").post(filterProducts);
-router.route("/productCategory").post(categoryProducts);
+router.route("/").get(userIsAuthenticated,product);
+router.route("/createProduct").post(userIsAuthenticated,createProduct);
+router.route("/userProducts").post(userIsAuthenticated,userProducts);
+router.route("/productList").post(userIsAuthenticated,filterProducts);
+router.route("/productCategory").post(userIsAuthenticated,categoryProducts);
 
 
 

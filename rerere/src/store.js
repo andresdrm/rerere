@@ -27,9 +27,7 @@ const persistedReducer = persistReducer(rootPersistConfig, reducers);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [REHYDRATE, PERSIST],
-    },
+    serializableCheck: false,
   })
 });
 
