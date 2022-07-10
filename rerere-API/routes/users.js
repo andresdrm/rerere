@@ -5,6 +5,7 @@ const {
   recoverPassword,
   editUser,
   changePassword,
+  listUsers
 } = require("../controllers/users");
 const { userIsAuthenticated } = require("../middlewares/auth");
 const {
@@ -14,8 +15,7 @@ const {
 
 const router = express.Router();
 
-// router.route("/").get([userIsAuthenticated, userIsInRole([ROLES.ADMIN])], listUsers);
-router.route("/").get();
+router.route("/").get(userIsAuthenticated,listUsers);
 router.route("/createUser").post(createUser);
 
 router.route("/login").post(loginUser);

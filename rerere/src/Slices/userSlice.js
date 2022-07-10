@@ -250,6 +250,25 @@ export const changePassword = createAsyncThunk('users/editUser', async(data) =>{
     }
 });
 
+export const getUsers = createAsyncThunk('/products/', async (credentials, {getState}) => {
+    const state = getState();
+     const usersFetch = await fetch('http://localhost:7500/users', {
+         method: 'GET',
+         headers: {
+            Authorization: `Bearer ${state.user.user.token}`
+        },
+     });
+     const users = await usersFetch.json();
+     if (usersFetch.status === 200) {
+         return users;
+     } else {
+         return {
+             error: true,
+             message: users.error.message,
+         }
+     }
+ });
+
 export const logout = createAsyncThunk('users/logout', async () =>{
     return;
 });

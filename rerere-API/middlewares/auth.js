@@ -17,7 +17,9 @@ exports.userIsAuthenticated = async (req, res, next) => {
                     });
                 }
                 else {
+                    console.log("Just antes de decrypt ", decryptedToken);
                     req.user = decryptedToken; //raro
+                    console.log("Just despues de decrypt", req.user);
                     next();
                 }
             } catch (error) {
@@ -30,14 +32,14 @@ exports.userIsAuthenticated = async (req, res, next) => {
         else {
             res.status(401).json({
                 error: true,
-                message: "El no usuario no está autenticado."
+                message: "El usuario no está autenticado."
             });
         }
     }
     else {
         res.status(401).json({
             error: true,
-            message: "El no usuario no está autenticado."
+            message: "El usuario no está autenticado."
         });
     }
 }

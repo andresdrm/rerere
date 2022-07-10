@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Lab CI0137 - API",
-    "description": "Este es el API del laboratorio de backend del curso de CI0137",
+    "title": "Rerere - API",
+    "description": "Este es el API del laboratorio de backend para la aplicación Rerere",
     "version": "1.0.0"
   },
   "host": "localhost:7500",
@@ -11,11 +11,37 @@
     "http",
     "https"
   ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Ingrese su token bearer"
+    }
+  },
+
   "paths": {
     "/upload": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Upload Image"
+        ],
+        "summary": "Sube una imagen",
+        "description": "Upload para las imágenes de los productos",
+        "consumes": "multipart/form-data",
+        "produces": "application/json",
+        "security":[
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "picture",
+            "in": "formData",
+            "type": "file"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -28,7 +54,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Devuelve una lista de los usuarios",
         "parameters": [
           {
             "name": "authorization",
@@ -47,33 +73,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "Add a user",
-            "schema": {
-              "$ref": "#/definitions/AddUser"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
       }
     },
     "/users/login": {
@@ -81,7 +80,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Se utiliza para ingresar al sitio, devuelve la información del usuario con su respectivo token",
         "parameters": [
           {
             "name": "body",
@@ -90,10 +89,10 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "example": "lotazi@mailo.icu"
                 },
-                "password": {
-                  "example": "any"
+                "contrasena": {
+                  "example": "asdf1234"
                 }
               }
             }
@@ -117,7 +116,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Envía un correo para cambiar la contraseña",
         "parameters": [
           {
             "name": "body",
@@ -126,7 +125,7 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "example": "ldiego.esquivel1001@gmail.com"
                 }
               }
             }

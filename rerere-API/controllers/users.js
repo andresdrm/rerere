@@ -108,7 +108,6 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.recoverPassword = async (req, res) => {
-  // #swagger.tags = ['Users']
   try {
     let array = data;
     const userPayload = req.body;
@@ -198,7 +197,7 @@ exports.changePassword = async (req, res) => {
 exports.listUsers = async (req, res) => {
   // #swagger.tags = ['Users']
   try {
-    res.json(result);
+    res.json(data);
   } catch (error) {
     res.status(500).send("Server error: " + error);
   }

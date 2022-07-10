@@ -3,7 +3,7 @@ const express = require("express");
 const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-//const swaggerUI = require("swagger-ui-express");
+const swaggerUI = require("swagger-ui-express");
 const cors = require("cors");
 
 dotenv.config();
@@ -52,12 +52,18 @@ server.use(cors());
 server.use("/users", usersRoutes);
 server.use("/home", homeRoutes);
 server.use("/products", productsRoutes);
+const swaggerFile = require("./swagger.json");
 
 //Documentation setup
-// server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
-
-server.post("/upload", userIsAuthenticated,upload.single("file"), function (req, res) {
+server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
+const llega = () => {
+  console.log("Llegaaaaaaaaaa ", upload);
+  return;
+}
+server.post("/upload", userIsAuthenticated,llega, upload.single("file"),function (req, res) {
+  console.log(req.file);
   const file = req.file;
+ 
   res.send({
     message: "Uploaded!",
     url: file.location,
