@@ -1,6 +1,5 @@
 import React from "react";
 import back from '../../Assets/nbg.jpg'
-import SearchBar from "../../Component/SearchBar";
 import { useSelector } from "react-redux";
 
 function Hero() {
