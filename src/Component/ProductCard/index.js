@@ -35,8 +35,6 @@ function saveCategory(a){
     (document.getElementById("cancelNewCategory")).className="hidden";
     (document.getElementById("addNewCategory")).className="hidden";
   }
-
-   
 }
 
 
@@ -64,13 +62,11 @@ function ProductCard(props){
   <div className="lg:col-span-1  sm:col-span-3 max-h-[480px] min-h-[480px]">
     <div className="object-fill max-h-[480px] min-h-[480px] max-w-[320px] min-w-[320px] bg-white rounded-lg border border-gray-200 shadow-md ">
       <div className="">
-        <a href="/">
           <img
             className="max-h-[350px] min-h-[350px] max-w-[320px] min-w-[320px]  rounded-t-sm"
             src={props.info.url}
             alt="Producto"
           />
-        </a>
       </div>
       <div className="p-5 align-baseline relative mt-[-5%]">
         <p className="self-center mb-3 font-normal text-gray-700 dark:text-gray-400">

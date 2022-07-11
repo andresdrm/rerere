@@ -27,7 +27,7 @@ function Header(props) {
 
     const navigateLogout = () => {
          dispatch(logout());
-        // navigate('/');          
+              
     };
     
 return !userIsLoggedIn ? (

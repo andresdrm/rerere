@@ -15,18 +15,11 @@ export const About = () =>
                 </div>
                 <div className=" justify-center p-4 items-center w-[50%] mx-auto">
                 <p className='text-xl'>
-                    So I started to walk into the water. I won't lie to you boys, I was
-                    terrified. But I pressed on, and as I made my way past the breakers
-                    a strange calm came over me. I don't know if it was divine intervention
-                    or the kinship of all living things but I tell you Jerry at that moment,
-                    I <em>was</em> a marine biologist.
-                </p>
-                <p className='text-xl'>
-                    So I started to walk into the water. I won't lie to you boys, I was
-                    terrified. But I pressed on, and as I made my way past the breakers
-                    a strange calm came over me. I don't know if it was divine intervention
-                    or the kinship of all living things but I tell you Jerry at that moment,
-                    I <em>was</em> a marine biologist.
+                    Somos un ecommerce de productos amigables con el ambiente, nuestro
+                    propósito es cumplir con las 3 R, reducir, reciclar y reutilizar, y de 
+                    esta manera impulsar a los emprendedores costarricenses promocionando 
+                    sus productos en nuestra página ReReRe, y así continuar ayudando al medio 
+                    ambiente y hacer de Costa Rica un país más verde.
                 </p>
           
                 </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import back from '../../Assets/nbg.jpg'
 import SearchBar from "../../Component/SearchBar";
-  
+import { useSelector } from "react-redux";
 
 function Hero() {
-    
+    const user = useSelector((state) => state.user.user);
     return (
         <>
         <div className="w-full h-screen relative   ">
@@ -17,7 +17,9 @@ function Hero() {
                 <h2 className="py-4 text-2xl sm:text-4xl ">
                     Reducir, reciclar y reutilizar
                 </h2>
-                <SearchBar />
+                <h4 className=" text-2xl sm:text-4xl ">
+                    Bievenido {user?.name} 
+                </h4>
             </div>
         </div>
         </>
