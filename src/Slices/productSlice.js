@@ -5,7 +5,7 @@ const productSlice = createSlice({
     initialState:
     {
         success: false,
-        product: null,
+        product: null
     },
     reducers: {
         cleanState:(state) =>{
@@ -79,8 +79,21 @@ const productSlice = createSlice({
             state.success = false;
             state.product = null;
         })
+        .addCase(setProduct.fulfilled, (state, action) => {
+            if (action.payload.error) {
+                state.success = false;
+                state.product = null;
+            } else {
+                state.success = true;
+                state.product = action.payload;
+            }
+        })
+        .addCase(setProduct.rejected, (state) => {
+            state.success = false;
+            state.product = null;
+        })
     }
-
+    
 });
 
 export const {cleanState} = productSlice.actions;
@@ -136,7 +149,6 @@ export const getProducts = createAsyncThunk('/products/', async (credentials, {g
 
  export const getProductsFiltered = createAsyncThunk('products/productList', async (credentials, { getState }) => {
     const state = getState();
-    console.log("Product list es: ", credentials);
     const filterProductsFetch = await fetch('https://rerere-api.herokuapp.com/products/productList', {
         method: 'POST',
         headers: {
@@ -206,6 +218,10 @@ export const getUserProducts = createAsyncThunk('/products/userProducts', async(
             message: products.error.message,
         }
     }
-})
+});
+
+export const setProduct = createAsyncThunk('product', async (i) =>{
+    return i;
+});
 
 export default productSlice.reducer;

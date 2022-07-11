@@ -29,9 +29,7 @@ export const NewUser = () =>
    }
    const navigate = useNavigate();
    const handleProduct = () => {
-    console.log("img essss: ", img);
     datos.picture = img;
-    console.log("datos sonnnnn: ", datos)
     dispatch(postCreateUser(datos));
     navigate("/");
  }
@@ -56,7 +54,7 @@ export const NewUser = () =>
 
                        
                         <input className="absolute shadow rounded-full min-w-[9%] max-w-[9%] min-h-[18%] max-h-[18%] align-middle border-none opacity-0 cursor-pointer" type="file"  placeholder='img' accept="image/*" 
-                        onChange={(evt) => {setImg(evt.target.files[0]);  console.log("Esto es: ", evt.target.files[0]); handleChange("picture", img)}}/>  
+                        onChange={(evt) => {setImg(evt.target.files[0]); handleChange("picture", img)}}/>  
                 </div>
 
 
@@ -94,7 +92,7 @@ export const NewUser = () =>
                         <div className="flex justify-center items-center flex-col mb-4">
                             <div className="mb-6">
                                 <button type="submit" className="w-48 px-6 py-2 border-2 border-lime-700 text-lime-700 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                                >Iniciar Sesion</button>
+                                >Confirmar</button>
                             </div>
                         </div>
                     

@@ -56,12 +56,9 @@ const swaggerFile = require("./swagger.json");
 
 //Documentation setup
 server.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
-const llega = () => {
-  return;
-}
+
 
 server.post("/upload", userIsAuthenticated, upload.single("file"),function (req, res) {
-  console.log("Req file es:", req.file);
   const file = req.file;
  
   res.send({

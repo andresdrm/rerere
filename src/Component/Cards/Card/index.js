@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Card = (props) => {
-    console.log("Props es: ", props.cardInfo);
     return(
 
         <div className="p-6 sm:w-1/1 lg:w-1/2 xl:w-1/4 gap-2 mx-auto">

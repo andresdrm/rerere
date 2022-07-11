@@ -77,14 +77,14 @@ return !userIsLoggedIn ? (
       <div onClick={handleNav} className={nav ? 'absolute left-0 top-0 w-full bg-gray-100/90 px-4 py-7 flex flex-col' : 'absolute left-[-100%]'}>
          <ul>
             <h1>ReReRé</h1>
-            <li  onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_HOME)}} className="border-b">Inicio</li>
-            <li   onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST)}} className="border-b">Productos a la venta </li>
-            <li  onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST_USER)}} className="border-b">Mis productos</li>
-            <li   onClick ={()=>{ Mixpanel.track(Mixpanel.TYPES.GO_TO_ABOUT)}} className="border-b">Información</li>
+            <li  onClick ={()=>{ navigate('/home'); Mixpanel.track(Mixpanel.TYPES.GO_TO_HOME)}} className="border-b">Inicio</li>
+            <li   onClick ={()=>{  navigate('/productList'); Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST)}} className="border-b">Productos a la venta </li>
+            <li  onClick ={()=>{  navigate('/userProducts'); Mixpanel.track(Mixpanel.TYPES.GO_TO_PRODUCT_LIST_USER)}} className="border-b">Mis productos</li>
+            <li   onClick ={()=>{ navigate('/About');  Mixpanel.track(Mixpanel.TYPES.GO_TO_ABOUT)}} className="border-b">Información</li>
             <div className="flex flex-col">
                <button onClick={()=> { Mixpanel.track(Mixpanel.TYPES.GO_TO_CART); navigateCart();}}> Carrito </button>
-               <button onClick={()=> {  Mixpanel.track(Mixpanel.TYPES.GO_TO_EDIT_USER); navigateEditUser(); }}>Mi perfil</button>
-               <button onClick={() => {Mixpanel.track(Mixpanel.TYPES.USER_SIGN_OUT); navigateLogout();}}  >Cerrar sesión</button>
+               <button onClick={()=> {   Mixpanel.track(Mixpanel.TYPES.GO_TO_EDIT_USER); navigateEditUser(); }}>Mi perfil</button>
+               <button onClick={() => { Mixpanel.track(Mixpanel.TYPES.USER_SIGN_OUT); navigateLogout();}}  >Cerrar sesión</button>
             </div>
          </ul>
       </div>

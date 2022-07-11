@@ -235,7 +235,6 @@ export const newPassword = createAsyncThunk('users/editUser', async(data, { getS
 });
 
 export const changePassword = createAsyncThunk('users/editUser', async(data) =>{
-    console.log("Data es: ", data)
     const editPasswordFetch = await fetch('https://rerere-api.herokuapp.com/users/changePassword', {
         
         method: 'PATCH',

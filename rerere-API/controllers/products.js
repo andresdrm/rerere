@@ -43,7 +43,6 @@ exports.categoryProducts = async (req, res) =>
 
 exports.filterProducts = async (req, res) => 
 {
-console.log("Req es: ", req.body);
   try {
     const productPayload = req.body;
 

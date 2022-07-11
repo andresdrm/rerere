@@ -4,7 +4,7 @@ import SearchBar from "../../Component/SearchBar";
 import ProductCard from "../../Component/ProductCard";
 import {useNavigate } from "react-router-dom";
 import {useDispatch, useSelector } from "react-redux";
-import { getUserProducts } from "../../Slices/productSlice";
+import { getUserProducts, setProduct } from "../../Slices/productSlice";
 let length = 0;
 const dataTemp = [];
 let total = 0;
@@ -26,8 +26,10 @@ function UserProducts(){
     const user = useSelector((state) => state.user.user);
     const productData = useSelector((state) => state.product.product);
     const dispatch = useDispatch();
+
+
+
     useEffect(() => {
-     
       dispatch(getUserProducts(user?.email));
      
   }, [dispatch, user]);
@@ -37,15 +39,20 @@ function UserProducts(){
     total =  Math.ceil(productData.length / 6);
     fillDataTemp(page*6, productData);
   }
-
+  const setProd = (i) => {
+    
+    dispatch(setProduct(i));
+   }
 
     
-    function handleChange(newValue) {
-      Promise.resolve(i =productData.map(function(x) {return x.id; }).indexOf(newValue)).then(() => {
-        productData.splice(i,1);
-        length = length -1;
-        total = Math.ceil(length / 6);
-      });
+  function handleChange(newValue) {
+    let array = productData;
+   Promise.resolve(i = array.filter(i => i[0].id !== Number(newValue))).then(() => {
+      length = length -1;
+      total = Math.ceil(length / 6);
+      setProd(i);
+    });
+
 
     }
 

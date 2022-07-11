@@ -169,7 +169,6 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.changePassword = async (req, res) => {
-  console.log("Req: ", req.body );
   try {
     if (req.body === null) 
     {
@@ -196,7 +195,6 @@ exports.changePassword = async (req, res) => {
         );
       return;
    }
-   console.log("LLego al 200");
    res.status(200).send("Contraseña restaurada");
 
   } catch (error) {
