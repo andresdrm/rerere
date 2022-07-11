@@ -83,7 +83,7 @@ const userSlice = createSlice({
 
 export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentials) => {
 
-    const loginFetch = await fetch('http://localhost:7500/users/login', {
+    const loginFetch = await fetch('https://rerere-api.herokuapp.com/users/login', {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
@@ -113,7 +113,7 @@ export const postLogin = createAsyncThunk('usuarios/postLogin', async (credentia
 
 export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async (credentials) => {
     const formData = new FormData();
-    const uploadFileFetch = await fetch('http://localhost:7500/uploadUser', {
+    const uploadFileFetch = await fetch('https://rerere-api.herokuapp.com/uploadUser', {
         method: 'POST',
         body: formData,
     });
@@ -122,7 +122,7 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
     credentials.picture = uploadFileData.url; 
  
 
-    const createUserFetch = await fetch('http://localhost:7500/users/createUser', {
+    const createUserFetch = await fetch('https://rerere-api.herokuapp.com/users/createUser', {
 
         method: 'POST',
         headers: {
@@ -150,7 +150,7 @@ export const postCreateUser = createAsyncThunk('usuarios/postCreateUser', async 
 
 export const editUser = createAsyncThunk('users/editUser', async(data, { getState }) =>{
     const state = getState();
-    const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
+    const editUserFetch = await fetch(`https://rerere-api.herokuapp.com/users/editUser/${data.id}`, {
      
         method: 'POST',
         headers: {
@@ -179,7 +179,7 @@ export const editUser = createAsyncThunk('users/editUser', async(data, { getStat
 });
 
 export const recoverPassword = createAsyncThunk('users/recover-password', async(mail) =>{
-    const recoverFetch = await fetch('http://localhost:7500/users/recover-password/', {
+    const recoverFetch = await fetch('https://rerere-api.herokuapp.com/users/recover-password/', {
     method: 'POST',
     headers: {
         "Content-type": "application/json"
@@ -206,7 +206,7 @@ export const recoverPassword = createAsyncThunk('users/recover-password', async(
 
 export const newPassword = createAsyncThunk('users/editUser', async(data, { getState }) =>{
     const state = getState();
-    const editUserFetch = await fetch(`http://localhost:7500/users/editUser/${data.id}`, {
+    const editUserFetch = await fetch(`https://rerere-api.herokuapp.com/users/editUser/${data.id}`, {
      
         method: 'POST',
         headers: {
@@ -236,7 +236,7 @@ export const newPassword = createAsyncThunk('users/editUser', async(data, { getS
 
 export const changePassword = createAsyncThunk('users/editUser', async(data) =>{
     console.log("Data es: ", data)
-    const editPasswordFetch = await fetch('http://localhost:7500/users/changePassword', {
+    const editPasswordFetch = await fetch('https://rerere-api.herokuapp.com/users/changePassword', {
         
         method: 'PATCH',
         headers: {

@@ -30,7 +30,7 @@ const homeSlice = createSlice({
 export const { cards } = homeSlice.actions;
 
 export const getCards = createAsyncThunk('/home', async () => {
-    const cardsFetch = await fetch('http://localhost:7500/home/', {
+    const cardsFetch = await fetch('https://rerere-api.herokuapp.com/home/', {
         method: 'GET',
     });
     const cards = await cardsFetch.json();

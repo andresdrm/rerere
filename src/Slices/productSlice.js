@@ -89,14 +89,14 @@ export const createProduct = createAsyncThunk('products/createProduct', async ( 
     const state = getState();
     const formData = new FormData();
     formData.append('file', product.img);
-    const uploadFileFetch = await fetch('http://localhost:7500/upload', {
+    const uploadFileFetch = await fetch('https://rerere-api.herokuapp.com/upload', {
         method: 'POST',
         headers: {Authorization: `Bearer ${state.user.user.token}`},
         body: formData,
     });
     const uploadFileData = await uploadFileFetch.json();
     product.picture = uploadFileData.url; 
-    const createProductFetch = await fetch('http://localhost:7500/products', {
+    const createProductFetch = await fetch('https://rerere-api.herokuapp.com/products', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const createProduct = createAsyncThunk('products/createProduct', async ( 
 
 export const getProducts = createAsyncThunk('/products/', async (credentials, {getState}) => {
     const state = getState();
-     const productsFetch = await fetch('http://localhost:7500/products', {
+     const productsFetch = await fetch('https://rerere-api.herokuapp.com/products', {
          method: 'GET',
          headers: {
             Authorization: `Bearer ${state.user.user.token}`
@@ -137,7 +137,7 @@ export const getProducts = createAsyncThunk('/products/', async (credentials, {g
  export const getProductsFiltered = createAsyncThunk('products/productList', async (credentials, { getState }) => {
     const state = getState();
     console.log("Product list es: ", credentials);
-    const filterProductsFetch = await fetch('http://localhost:7500/products/productList', {
+    const filterProductsFetch = await fetch('https://rerere-api.herokuapp.com/products/productList', {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
@@ -161,7 +161,7 @@ export const getProducts = createAsyncThunk('/products/', async (credentials, {g
 
 export const getProductsCategory = createAsyncThunk('products/productCategory', async (credentials, { getState }) => {
     const state = getState();
-    const filterProductsFetch = await fetch('http://localhost:7500/products/productCategory', {
+    const filterProductsFetch = await fetch('https://rerere-api.herokuapp.com/products/productCategory', {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
@@ -185,7 +185,7 @@ export const getProductsCategory = createAsyncThunk('products/productCategory', 
 
 export const getUserProducts = createAsyncThunk('/products/userProducts', async(email, { getState }) => {
     const state = getState();
-    const productsFetch = await fetch('http://localhost:7500/products/userProducts', {
+    const productsFetch = await fetch('https://rerere-api.herokuapp.com/products/userProducts', {
          method: 'POST',
          headers: {
             "Content-Type": "application/json",
