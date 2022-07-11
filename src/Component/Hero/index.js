@@ -17,7 +17,7 @@ function Hero() {
                     Reducir, reciclar y reutilizar
                 </h2>
                 <h4 className=" text-2xl sm:text-4xl ">
-                    Bievenido {user?.name} 
+                    ¡Hola, {user?.name}! 
                 </h4>
             </div>
         </div>

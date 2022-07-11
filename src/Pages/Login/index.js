@@ -37,7 +37,7 @@ export default function Login() {
       <div className=" justify-center p-4 items-center w-[40%] mx-auto">
           <form>
               <div className="mb-6">
-                  <input type="text" id="nombre" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-black" placeholder="Correo electronico" required value={email}
+                  <input type="text" id="nombre" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-black" placeholder="Correo electrónico" required value={email}
             onChange={(evt) => {
               setEmail(evt.target.value);
             }} >
